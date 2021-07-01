@@ -1,11 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, Column} from "typeorm";
+import Model from "./Model"
 
-@Entity()
-export class User {
-
-    @PrimaryGeneratedColumn()
-    id: number;
-
+@Entity("users")
+export default class User extends Model {
     @Column()
     firstName: string;
 
@@ -13,6 +10,18 @@ export class User {
     lastName: string;
 
     @Column()
-    age: number;
+    email: string;
+    
+    @Column()
+    level: string;
+    
+    @Column()
+    phone: number;
+
+    @Column()
+    matric_no: string;
+
+    @Column()
+    password: string;
 
 }
