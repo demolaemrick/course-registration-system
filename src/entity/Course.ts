@@ -1,11 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, Column} from "typeorm";
+import Model from "./Model"
 
-@Entity()
-export class Course {
 
-    @PrimaryGeneratedColumn()
-    id: number;
-
+@Entity("courses")
+export class Course extends Model {
     @Column()
     course_code: string;
 
@@ -14,5 +12,4 @@ export class Course {
 
     @Column()
     course_unit: string;
-
 }
