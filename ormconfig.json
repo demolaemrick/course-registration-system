@@ -2,9 +2,9 @@
    "type": "postgres",
    "host": "localhost",
    "port": 5432,
-   "username": "test",
-   "password": "test",
-   "database": "test",
+   "username": "emric",
+   "password": "root",
+   "database": "course-registration-db",
    "synchronize": true,
    "logging": false,
    "entities": [
