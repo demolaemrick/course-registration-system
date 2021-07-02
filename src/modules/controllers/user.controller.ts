@@ -31,16 +31,38 @@ export const login = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ matric_no });
 
-    if (!user) return res.status(404).json({ errorMessage: "Student with this ID does not exist" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ errorMessage: "Student with this ID does not exist" });
 
     const match = await bcrypt.compare(password, user.password);
 
-    if (!match) return res.status(403).json({errorMessage: "Incorrect password"});
+    if (!match)
+      return res.status(403).json({ errorMessage: "Incorrect password" });
 
     const token = generateToken(user);
 
     return res.json({ token, user });
   } catch (err) {
     res.status(500).json(err.message);
+  }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const { phone, department, college, level, programme, gender } = req.body;
+  try {
+    const user = await User.findOne({ uuid: userId });
+    if (!user) return res.status(404).json({ errorMessage: "Wrong user id" });
+
+    const updatedUser = await User.update(
+      { uuid: userId },
+      { phone, department, college, level, programme, gender }
+    );
+
+    return res.json(updatedUser);
+  } catch (err) {
+    res.status(500).send(err.message);
   }
 };
