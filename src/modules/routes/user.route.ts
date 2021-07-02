@@ -1,13 +1,17 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-import { createUser, login } from "../controllers/user.controller"
+import { createUser, login, updateUser } from "../controllers/user.controller";
 
-import { validate, registerValidationRules, loginValidationRules } from "../utils/validator"
+import {
+  validate,
+  registerValidationRules,
+  loginValidationRules,
+} from "../utils/validator";
 
-const router = Router()
+const router = Router();
 
-router.post('/register', registerValidationRules(), validate,  createUser)
-router.post('/auth', loginValidationRules(), validate, login)
+router.post("/register", registerValidationRules(), validate, createUser);
+router.post("/auth", loginValidationRules(), validate, login);
+router.put("/:id/update", updateUser);
 
-
-export default router
+export default router;
