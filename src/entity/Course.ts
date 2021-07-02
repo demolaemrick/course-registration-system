@@ -3,7 +3,7 @@ import Model from "./Model"
 
 
 @Entity("courses")
-export class Course extends Model {
+export  default class Course extends Model {
     @Column()
     course_code: string;
 
