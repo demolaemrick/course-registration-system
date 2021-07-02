@@ -13,10 +13,25 @@ export default class User extends Model {
   email: string;
 
   @Column({ nullable: true })
-  level: string;
+  gender: string;
 
   @Column({ nullable: true })
-  phone: number;
+  level: number;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  college: string;
+
+  @Column({ nullable: true })
+  department: string;
+
+  @Column({ nullable: true })
+  programme: string;
+
+  @Column({ nullable: true })
+  profile_picture: string;
 
   @Column()
   matric_no: string;
