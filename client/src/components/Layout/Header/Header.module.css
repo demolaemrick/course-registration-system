@@ -1,0 +1,15 @@
+.header {
+  background-color: teal;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  color: #fff;
+}
+
+.header-items {
+    padding: 10px
+}
+.header-items span{
+    margin-right: 10px;
+}
