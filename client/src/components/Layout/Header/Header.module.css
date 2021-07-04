@@ -3,13 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 65px;
   color: #fff;
 }
-
-.header-items {
-    padding: 10px
-}
-.header-items span{
-    margin-right: 10px;
+a{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
 }
