@@ -8,9 +8,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+import { useHistory } from "react-router-dom";
+
 import Card from "../UI/Card/Card";
 
 const SignUp = () => {
+  const history = useHistory();
   return (
     <Center h="650">
       <Card width="30%">
@@ -70,7 +73,12 @@ const SignUp = () => {
               size="sm"
             />
           </FormControl>
-          <Button mt={4} colorScheme="teal" type="submit">
+          <Button
+            mt={4}
+            colorScheme="teal"
+            type="submit"
+            onClick={() => history.push("/login")}
+          >
             Sign Up
           </Button>
         </VStack>
