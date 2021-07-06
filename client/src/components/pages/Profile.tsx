@@ -20,7 +20,7 @@ const Profile = () => {
           <Box w="600px">
             <FormControl id="matricNo" mb="3">
               <HStack>
-                <FormLabel>Matric No</FormLabel>
+                <FormLabel w="73px">Name:</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
@@ -32,7 +32,7 @@ const Profile = () => {
             </FormControl>
             <FormControl id="matricNo">
               <HStack>
-                <FormLabel>Matric No</FormLabel>
+                <FormLabel>Matric No:</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
