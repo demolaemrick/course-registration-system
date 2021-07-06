@@ -8,9 +8,13 @@ import {
   Text
 } from "@chakra-ui/react";
 
+import { useHistory } from "react-router-dom"
+
 import Card from "../UI/Card/Card";
 
 const Auth = () => {
+  const history = useHistory()
+
   return (
     <Center h="600">
       <Card width="30%">
@@ -34,7 +38,7 @@ const Auth = () => {
               size="sm"
             />
           </FormControl>
-          <Button mt={4} colorScheme="teal" type="submit">
+          <Button onClick={() => history.push('/')} mt={4} colorScheme="teal" type="submit">
             Sign In
           </Button>
         </VStack>
