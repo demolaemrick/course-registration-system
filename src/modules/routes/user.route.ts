@@ -12,6 +12,6 @@ const router = Router();
 
 router.post("/register", registerValidationRules(), validate, createUser);
 router.post("/auth", loginValidationRules(), validate, login);
-router.put("/:id/update", updateUser);
+router.patch("/:id/update", updateUser);
 
 export default router;
