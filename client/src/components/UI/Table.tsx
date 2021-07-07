@@ -28,7 +28,7 @@ const TableLayout = () => {
           <Td>Introduction to computer science</Td>
           <Td>25.4</Td>
           <Td isNumeric>
-            <Checkbox colorScheme="red" />
+            <Checkbox colorScheme="red" borderColor="red" />
           </Td>
         </Tr>
         <Tr>
@@ -36,7 +36,7 @@ const TableLayout = () => {
           <Td>centimetres (cm)</Td>
           <Td>30.48</Td>
           <Td isNumeric>
-            <Checkbox colorScheme="red" />
+            <Checkbox colorScheme="red" borderColor="red" />
           </Td>
         </Tr>
         <Tr>
@@ -44,7 +44,7 @@ const TableLayout = () => {
           <Td>metres (m)</Td>
           <Td>0.91444</Td>
           <Td isNumeric>
-            <Checkbox colorScheme="red" />
+            <Checkbox colorScheme="red" borderColor="red" />
           </Td>
         </Tr>
       </Tbody>
