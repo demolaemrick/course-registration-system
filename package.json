@@ -4,6 +4,7 @@
    "main": "index.js",
    "license": "MIT",
    "dependencies": {
+      "@reduxjs/toolkit": "^1.6.0",
       "bcrypt": "^5.0.1",
       "class-validator": "^0.13.1",
       "cors": "^2.8.5",
@@ -11,6 +12,8 @@
       "express-validator": "^6.12.0",
       "jsonwebtoken": "^8.5.1",
       "pg": "^8.4.0",
+      "react-redux": "^7.2.4",
+      "redux-thunk": "^2.3.0",
       "reflect-metadata": "^0.1.10",
       "typeorm": "0.2.34"
    },
