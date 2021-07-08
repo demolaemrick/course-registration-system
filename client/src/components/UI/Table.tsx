@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Table,
   Thead,
@@ -9,8 +10,23 @@ import {
   TableCaption,
   Checkbox,
 } from "@chakra-ui/react";
+import { coursesType } from "../../types/course";
 
-const TableLayout = () => {
+const TableLayout = ({ courses }: coursesType) => {
+  console.log(courses);
+  // const coursesData = courses.map((course) => {
+  //   return (
+  //     <Tr key={course.uuid}>
+  //       <Td>{course.course_code}</Td>
+  //       <Td>{course.course_title}</Td>
+  //       <Td>{course.course_unit}</Td>
+  //       <Td isNumeric>
+  //         <Checkbox colorScheme="red" borderColor="red" />
+  //       </Td>
+  //     </Tr>
+  //   );
+  // });
+
   return (
     <Table variant="striped" colorScheme="teal">
       <TableCaption>Imperial to metric conversion factors</TableCaption>
