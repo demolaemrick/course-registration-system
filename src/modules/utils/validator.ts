@@ -20,14 +20,14 @@ export const registerValidationRules = () => {
       .matches(/^[a-zA-Z ]*$/)
       .withMessage("Only Characters with white spaces are not allowed"),
     // matric no validation
-    body("matric_no")
+    body("matricNo")
       .trim()
       .notEmpty()
       .withMessage("Fill in your matric number")
       .matches(/^(AUO)?[0-9]{2}\w{2}[0-9]{4}$/)
       .withMessage("Incorrect Matric number format"),
-    body("matric_no").custom((matric_no) => {
-      return User.findOne({ matric_no }).then((user) => {
+    body("matricNo").custom((matricNo) => {
+      return User.findOne({ matricNo }).then((user) => {
         if (user) {
           return Promise.reject(
             "Student with this particular matric number has already been created"
