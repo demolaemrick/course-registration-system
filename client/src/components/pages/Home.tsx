@@ -1,6 +1,7 @@
 import React from "react";
-import Table from "../UI/Table";
 import { Flex, Center } from "@chakra-ui/react";
+
+import Table from "../UI/Table";
 
 const Home = () => {
   return (
