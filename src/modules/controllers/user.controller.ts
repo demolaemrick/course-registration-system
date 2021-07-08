@@ -5,7 +5,7 @@ import User from "../../entity/User";
 import generateToken from "../utils/generateToken";
 
 export const createUser = async (req: Request, res: Response) => {
-  let { firstName, lastName, email, matric_no, password } = req.body;
+  let { firstName, lastName, email, matricNo, password } = req.body;
 
   try {
     password = await bcrypt.hash(password, 12);
@@ -14,7 +14,7 @@ export const createUser = async (req: Request, res: Response) => {
       firstName,
       lastName,
       email,
-      matric_no,
+      matricNo,
       password,
     });
     await user.save();
@@ -26,10 +26,10 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { matric_no, password } = req.body;
+  const { matricNo, password } = req.body;
 
   try {
-    const user = await User.findOne({ matric_no });
+    const user = await User.findOne({ matricNo });
 
     if (!user)
       return res
@@ -41,9 +41,9 @@ export const login = async (req: Request, res: Response) => {
     if (!match)
       return res.status(403).json({ errorMessage: "Incorrect password" });
 
-    const token = generateToken(user);
+    const acessToken = generateToken(user);
 
-    return res.json({ token, user });
+    return res.json({ acessToken, user });
   } catch (err) {
     res.status(500).json(err.message);
   }
