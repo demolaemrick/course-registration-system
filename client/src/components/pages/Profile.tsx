@@ -14,10 +14,73 @@ import Card from "../UI/Card/Card";
 
 const Profile = () => {
   return (
-    <Center h="300px">
+    <Center h="500px">
       <Card width="50%">
         <Flex>
           <Box w="600px">
+            <FormControl id="matricNo" mb="3">
+              <HStack>
+                <FormLabel w="73px">Name:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  placeholder="Enter your matric number"
+                  size="sm"
+                />
+              </HStack>
+            </FormControl>
+            <FormControl id="matricNo" mb="3">
+              <HStack>
+                <FormLabel w="73px">Name:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  placeholder="Enter your matric number"
+                  size="sm"
+                />
+              </HStack>
+            </FormControl>
+
+            <FormControl id="matricNo" mb="3">
+              <HStack>
+                <FormLabel w="73px">Name:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  placeholder="Enter your matric number"
+                  size="sm"
+                />
+              </HStack>
+            </FormControl>
+
+            <FormControl id="matricNo" mb="3">
+              <HStack>
+                <FormLabel w="73px">Name:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  placeholder="Enter your matric number"
+                  size="sm"
+                />
+              </HStack>
+            </FormControl>
+            <FormControl id="matricNo" mb="3">
+              <HStack>
+                <FormLabel w="73px">Name:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  placeholder="Enter your matric number"
+                  size="sm"
+                />
+              </HStack>
+            </FormControl>
+
             <FormControl id="matricNo" mb="3">
               <HStack>
                 <FormLabel w="73px">Name:</FormLabel>
