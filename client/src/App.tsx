@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { fetchCourses } from "./store/course-actions";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
@@ -7,6 +10,11 @@ import SignUp from "./components/pages/SignUp";
 import Profile from "./components/pages/Profile";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
   return (
     <Router>
       <Switch>
