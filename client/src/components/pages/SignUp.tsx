@@ -38,7 +38,7 @@ const SignUp = () => {
 
   const handleSubmit = () => {
     console.log(formData);
-    dispatch(register(formData));
+    dispatch(register(formData, history));
   };
   return (
     <Center h="650">
