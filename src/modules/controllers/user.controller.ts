@@ -41,13 +41,27 @@ export const login = async (req: Request, res: Response) => {
     if (!match)
       return res.status(403).json({ errorMessage: "Incorrect password" });
 
-    const acessToken = generateToken(user);
+    const accessToken = generateToken(user);
+    const response = res
+      .cookie("accessToken", accessToken, {
+        httpOnly: process.env.NODE_ENV === "production",
+        secure: process.env.NODE_ENV === "production",
+      })
+      .status(200)
+      .json({ message: "Logged in successfully 😊 👌", accessToken, user });
 
-    return res.json({ acessToken, user });
+    return response;
   } catch (err) {
     res.status(500).json(err.message);
   }
 };
+
+export const logout = (req: Request, res: Response) => {
+  return res
+    .clearCookie("accessToken")
+    .status(200)
+    .json({ message: "Successfully logged out 😏 🍀" });
+}
 
 export const updateUser = async (req: Request, res: Response) => {
   const userId = req.params.id;
