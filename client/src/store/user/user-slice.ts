@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { userType } from "../../types/user";
+import { userFormData } from "../../types/user";
+
+// interface errorTypes {
+//   errors: userFormData[];
+// }
 
 interface userType {
-    accessToken: string | null;
+  accessToken?: string | null;
+  errors: userFormData[];
 }
 const initialState: userType = {
-    accessToken: null
+  accessToken: null,
+  errors: [],
 };
 
 export const userSlice = createSlice({
@@ -13,7 +19,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     register: (state, action: PayloadAction<userType>) => {
-      state.accessToken = action.payload.accessToken;
+      state.errors = action.payload.errors;
     },
   },
 });
