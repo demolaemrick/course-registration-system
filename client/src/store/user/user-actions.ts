@@ -2,14 +2,16 @@ import * as apis from '../../api'
 import { userFormData } from "../../types/user"
 import { AppDispatch } from "../index";
 import { userActions } from "./user-slice"
+import { History } from 'history';
 
-export const register = (formData: userFormData) => async (dispatch: AppDispatch) => {
+
+export const register = (formData: userFormData, router: History) => async (dispatch: AppDispatch) => {
     console.log(formData)
     try{
         const response = await apis.registerUser(formData);
-        console.log(response)
-        // dispatch(userActions.register({accessToken: data.accessToken}))
+        router.push('/login')
     }catch(err){
-        console.log(err.message)
+        console.log(err.response.data.errors)
+        dispatch(userActions.register({errors: err.response.data.errors}))
     }
 }
