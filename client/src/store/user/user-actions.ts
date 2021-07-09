@@ -8,7 +8,7 @@ import { History } from 'history';
 export const register = (formData: userFormData, router: History) => async (dispatch: AppDispatch) => {
     console.log(formData)
     try{
-        const response = await apis.registerUser(formData);
+        await apis.registerUser(formData);
         router.push('/login')
     }catch(err){
         console.log(err.response.data.errors)
