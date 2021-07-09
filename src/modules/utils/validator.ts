@@ -74,7 +74,7 @@ export const registerValidationRules = () => {
 export const loginValidationRules = () => {
   return [
     // matric no validation
-    body("matric_no")
+    body("matricNo")
       .trim()
       .notEmpty()
       .withMessage("Fill in your matric number"),   
