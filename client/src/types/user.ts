@@ -9,3 +9,9 @@ export interface userFormData extends userType {
   password: string;
   passwordConfirm: string;
 }
+
+
+export interface loginCredentials {
+  matricNo: string;
+  password: string;
+}
