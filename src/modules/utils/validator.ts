@@ -25,16 +25,16 @@ export const registerValidationRules = () => {
       .notEmpty()
       .withMessage("Fill in your matric number")
       .matches(/^(AUO)?[0-9]{2}\w{2}[0-9]{4}$/)
-      .withMessage("Incorrect Matric number format"),
-    body("matricNo").custom((matricNo) => {
-      return User.findOne({ matricNo }).then((user) => {
-        if (user) {
-          return Promise.reject(
-            "Student with this particular matric number has already been created"
-          );
-        }
-      });
-    }),
+      .withMessage("Incorrect Matric number format")
+      .custom((matricNo) => {
+        return User.findOne({ matricNo }).then((user) => {
+          if (user) {
+            return Promise.reject(
+              "Student with this particular matric number has already been created"
+            );
+          }
+        });
+      }),
     // email address validation
     body("email")
       .notEmpty()
@@ -77,7 +77,8 @@ export const loginValidationRules = () => {
     body("matricNo")
       .trim()
       .notEmpty()
-      .withMessage("Fill in your matric number"),   
+      .withMessage("Fill in your matric number"),
+
     // password validation
     body("password").trim().notEmpty().withMessage("Password is required"),
   ];
