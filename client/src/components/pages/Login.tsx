@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   Center,
   FormControl,
@@ -5,21 +6,39 @@ import {
   Input,
   VStack,
   Button,
-  Text
+  Text,
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
 
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
+import { login } from "../../store/user/user-actions";
 import Card from "../UI/Card/Card";
 
 const Auth = () => {
-  const history = useHistory()
+  const matricNoRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSubmit = () => {
+    const enteredMatricNo = matricNoRef.current!.value;
+    const enteredPassword = passwordRef.current!.value;
+
+    const credentials = {
+      matricNo: enteredMatricNo,
+      password: enteredPassword,
+    };
+
+    dispatch(login(credentials, history));
+  };
 
   return (
     <Center h="600">
       <Card width="30%">
         <VStack spacing={4}>
-        <Text fontSize="4xl">Log In</Text>
+          <Text fontSize="4xl">Log In</Text>
           <FormControl id="matricNo">
             <FormLabel>Matric Number</FormLabel>
             <Input
@@ -27,6 +46,7 @@ const Auth = () => {
               focusBorderColor="teal.200"
               placeholder="Enter your matric number"
               size="sm"
+              ref={matricNoRef}
             />
           </FormControl>
           <FormControl id="password">
@@ -36,9 +56,15 @@ const Auth = () => {
               focusBorderColor="teal.200"
               placeholder="Enter your password"
               size="sm"
+              ref={passwordRef}
             />
           </FormControl>
-          <Button onClick={() => history.push('/')} mt={4} colorScheme="teal" type="submit">
+          <Button
+            onClick={handleSubmit}
+            mt={4}
+            colorScheme="teal"
+            type="submit"
+          >
             Sign In
           </Button>
         </VStack>
