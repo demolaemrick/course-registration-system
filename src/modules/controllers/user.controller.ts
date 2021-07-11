@@ -44,7 +44,8 @@ export const login = async (req: Request, res: Response) => {
     const response = res
       .cookie("accessToken", accessToken, {
         httpOnly: process.env.NODE_ENV === "production",
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 1 * 60 * 60 * 1000
       })
       .status(200)
       .json({ message: "Logged in successfully 😊 👌", accessToken, user });
