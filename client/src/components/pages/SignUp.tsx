@@ -8,14 +8,18 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Card from "../UI/Card/Card";
 import { userFormData } from "../../types/user";
 import { register } from "../../store/user/user-actions";
+import { RootState } from "../../store";
 
 const SignUp = () => {
+  const errors = useSelector((state: RootState) => state.userReducer.errors);
+  
+  console.log(errors);
   const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState<userFormData>({
@@ -37,7 +41,6 @@ const SignUp = () => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
     dispatch(register(formData, history));
   };
   return (
@@ -46,7 +49,7 @@ const SignUp = () => {
         <VStack spacing={4}>
           <Text fontSize="4xl">Sign Up</Text>
 
-          <FormControl id="firstName">
+          <FormControl id="firstName" isRequired>
             <FormLabel>First Name</FormLabel>
             <Input
               type="text"
@@ -57,7 +60,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl id="secondName">
+          <FormControl id="secondName" isRequired>
             <FormLabel>Last Name</FormLabel>
             <Input
               type="text"
@@ -68,7 +71,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl id="email">
+          <FormControl id="email" isRequired>
             <FormLabel>Email Address</FormLabel>
             <Input
               type="email"
@@ -79,7 +82,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl id="matricNo">
+          <FormControl id="matricNo" isRequired>
             <FormLabel>Matric Number</FormLabel>
             <Input
               type="text"
@@ -90,7 +93,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl id="password">
+          <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
@@ -101,7 +104,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl id="passwordConfirm">
+          <FormControl id="passwordConfirm" isRequired>
             <FormLabel>Confirm Password</FormLabel>
             <Input
               type="password"
