@@ -7,13 +7,19 @@ import { History } from "history";
 export const register =
   (formData: userFormData, router: History) =>
   async (dispatch: AppDispatch) => {
-    console.log(formData);
     try {
       await apis.registerUser(formData);
       router.push("/login");
     } catch (err) {
-      console.log(err.response.data.errors);
-      dispatch(userActions.register({ errors: err.response.data.errors }));
+      //   console.log(err.response.data);
+      const errors = err.response.data.errors;
+    console.log(errors)
+      let object = errors.reduce(
+        (obj: any, item: any) => Object.assign(obj, { [item.key]: item.value }),
+        {}
+      );
+      console.log(object);
+      dispatch(userActions.register({ errors: object }));
     }
   };
 
