@@ -7,11 +7,11 @@ import { userFormData } from "../../types/user";
 
 interface userType {
   accessToken?: string | null;
-  errors: userFormData[];
+  errors: userFormData | {};
 }
 const initialState: userType = {
   accessToken: null,
-  errors: [],
+  errors: {},
 };
 
 export const userSlice = createSlice({
