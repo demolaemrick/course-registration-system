@@ -9,14 +9,14 @@ export const registerValidationRules = () => {
     body("firstName")
       .trim()
       .notEmpty()
-      .withMessage("firstName is required")
+      .withMessage("Please enter your first name")
       .matches(/^[a-zA-Z ]*$/)
       .withMessage("Only Characters with white spaces are not allowed"),
     // last name validation
     body("lastName")
       .trim()
       .notEmpty()
-      .withMessage("second name is required")
+      .withMessage("Please enter your last name")
       .matches(/^[a-zA-Z ]*$/)
       .withMessage("Only Characters with white spaces are not allowed"),
     // matric no validation
@@ -38,25 +38,25 @@ export const registerValidationRules = () => {
     // email address validation
     body("email")
       .notEmpty()
-      .withMessage("Email Address is required")
+      .withMessage("Please enter your email address")
       .normalizeEmail()
       .isEmail()
-      .withMessage("must be a valid email"),
+      .withMessage("Invalid email address"),
     // password validation
     body("password")
       .trim()
       .notEmpty()
-      .withMessage("Password required")
+      .withMessage("Please enter your password")
       .isLength({ min: 7 })
-      .withMessage("password must be minimum 7 length")
+      .withMessage("Password must be minimum 7 length")
       .matches(/(?=.*?[A-Z])/)
-      .withMessage("At least one Uppercase")
+      .withMessage("Password must have at least one Uppercase")
       .matches(/(?=.*?[a-z])/)
-      .withMessage("At least one Lowercase")
+      .withMessage("Password must have at least one Lowercase")
       .matches(/(?=.*?[0-9])/)
-      .withMessage("At least one Number")
+      .withMessage("Password must have at least one Number")
       .matches(/(?=.*?[#?!@$%^&*-])/)
-      .withMessage("At least one special character")
+      .withMessage("Password must have at least one special character")
       .not()
       .matches(/^$|\s+/)
       .withMessage("White space not allowed"),
