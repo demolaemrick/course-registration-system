@@ -7,6 +7,7 @@ import {
   VStack,
   Button,
   Text,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -18,7 +19,6 @@ import { RootState } from "../../store";
 
 const SignUp = () => {
   const errors = useSelector((state: RootState) => state.userReducer.errors);
-  
   console.log(errors);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -58,7 +58,9 @@ const SignUp = () => {
               size="sm"
               name="firstName"
               onChange={handleChange}
+              isInvalid={!!errors.firstName}
             />
+            <p>{errors.firstName}</p>
           </FormControl>
           <FormControl id="secondName" isRequired>
             <FormLabel>Last Name</FormLabel>
@@ -70,6 +72,9 @@ const SignUp = () => {
               name="lastName"
               onChange={handleChange}
             />
+            {errors.lastName && (
+              <FormErrorMessage>{errors.lastName}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl id="email" isRequired>
             <FormLabel>Email Address</FormLabel>
@@ -81,6 +86,9 @@ const SignUp = () => {
               name="email"
               onChange={handleChange}
             />
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl id="matricNo" isRequired>
             <FormLabel>Matric Number</FormLabel>
@@ -92,6 +100,9 @@ const SignUp = () => {
               name="matricNo"
               onChange={handleChange}
             />
+            {errors.matricNo && (
+              <FormErrorMessage>{errors.matricNo}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
@@ -103,6 +114,9 @@ const SignUp = () => {
               name="password"
               onChange={handleChange}
             />
+            {errors.password && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl id="passwordConfirm" isRequired>
             <FormLabel>Confirm Password</FormLabel>
@@ -114,6 +128,9 @@ const SignUp = () => {
               name="passwordConfirm"
               onChange={handleChange}
             />
+            {errors.passwordConfirm && (
+              <FormErrorMessage>{errors.passwordConfirm}</FormErrorMessage>
+            )}
           </FormControl>
 
           <Button
