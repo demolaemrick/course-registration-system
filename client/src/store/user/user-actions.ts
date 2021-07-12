@@ -12,14 +12,9 @@ export const register =
       router.push("/login");
     } catch (err) {
       //   console.log(err.response.data);
-      const errors = err.response.data.errors;
-    console.log(errors)
-      let object = errors.reduce(
-        (obj: any, item: any) => Object.assign(obj, { [item.key]: item.value }),
-        {}
-      );
-      console.log(object);
-      dispatch(userActions.register({ errors: object }));
+      let errors = err.response.data.errors;
+      errors = Object.assign({}, ...errors);
+      dispatch(userActions.register({ errors }));
     }
   };
 
