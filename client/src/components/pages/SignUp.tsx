@@ -9,6 +9,7 @@ import {
   Text,
   FormErrorMessage,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -141,6 +142,9 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
+          <Link to="/login">
+            <p style={{ color: "blue" }}>Already have an account?</p>
+          </Link>
         </VStack>
       </Card>
     </Center>
