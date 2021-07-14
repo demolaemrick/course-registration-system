@@ -20,7 +20,6 @@ import { RootState } from "../../store";
 
 const SignUp = () => {
   const errors = useSelector((state: RootState) => state.userReducer.errors);
-  console.log(errors);
   const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState<userFormData>({
@@ -59,9 +58,9 @@ const SignUp = () => {
               size="sm"
               name="firstName"
               onChange={handleChange}
-              isInvalid={!!errors.firstName}
+              isInvalid={!!errors?.firstName}
             />
-            <p>{errors.firstName}</p>
+            <p>{errors?.firstName}</p>
           </FormControl>
           <FormControl id="secondName" isRequired>
             <FormLabel>Last Name</FormLabel>
@@ -73,8 +72,8 @@ const SignUp = () => {
               name="lastName"
               onChange={handleChange}
             />
-            {errors.lastName && (
-              <FormErrorMessage>{errors.lastName}</FormErrorMessage>
+            {errors?.lastName && (
+              <FormErrorMessage>{errors?.lastName}</FormErrorMessage>
             )}
           </FormControl>
           <FormControl id="email" isRequired>
@@ -87,8 +86,8 @@ const SignUp = () => {
               name="email"
               onChange={handleChange}
             />
-            {errors.email && (
-              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            {errors?.email && (
+              <FormErrorMessage>{errors?.email}</FormErrorMessage>
             )}
           </FormControl>
           <FormControl id="matricNo" isRequired>
@@ -101,8 +100,8 @@ const SignUp = () => {
               name="matricNo"
               onChange={handleChange}
             />
-            {errors.matricNo && (
-              <FormErrorMessage>{errors.matricNo}</FormErrorMessage>
+            {errors?.matricNo && (
+              <FormErrorMessage>{errors?.matricNo}</FormErrorMessage>
             )}
           </FormControl>
           <FormControl id="password" isRequired>
@@ -115,8 +114,8 @@ const SignUp = () => {
               name="password"
               onChange={handleChange}
             />
-            {errors.password && (
-              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            {errors?.password && (
+              <FormErrorMessage>{errors?.password}</FormErrorMessage>
             )}
           </FormControl>
           <FormControl id="passwordConfirm" isRequired>
@@ -129,8 +128,8 @@ const SignUp = () => {
               name="passwordConfirm"
               onChange={handleChange}
             />
-            {errors.passwordConfirm && (
-              <FormErrorMessage>{errors.passwordConfirm}</FormErrorMessage>
+            {errors?.passwordConfirm && (
+              <FormErrorMessage>{errors?.passwordConfirm}</FormErrorMessage>
             )}
           </FormControl>
 
