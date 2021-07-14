@@ -45,7 +45,7 @@ export const login = async (req: Request, res: Response) => {
       .cookie("accessToken", accessToken, {
         httpOnly: process.env.NODE_ENV === "production",
         secure: process.env.NODE_ENV === "production",
-        maxAge: 1 * 60 * 60 * 1000
+        maxAge: 1 * 60 * 60 * 1000,
       })
       .status(200)
       .json({ message: "Logged in successfully 😊 👌", accessToken, user });
@@ -61,6 +61,17 @@ export const logout = (req: Request, res: Response) => {
     .clearCookie("accessToken")
     .status(200)
     .json({ message: "Successfully logged out 😏 🍀" });
+};
+export const profile = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findOne({ uuid: userId });
+    if (!user) return res.status(404).json({ errorMessage: "Wrong user id" });
+    return res.json({ user });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
 export const updateUser = async (req: Request, res: Response) => {
