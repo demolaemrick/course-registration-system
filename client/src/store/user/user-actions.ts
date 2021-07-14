@@ -23,8 +23,8 @@ export const login =
   async (dispatch: AppDispatch) => {
     console.log(credentials);
     try {
-      const response = await apis.login(credentials);
-      console.log(response);
+      const {data: {user: {uuid: userId}}} = await apis.login(credentials);
+      dispatch(userActions.login({userId: userId}))
     } catch (err) {
       console.log(err.response.data);
     }
