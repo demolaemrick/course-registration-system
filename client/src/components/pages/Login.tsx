@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import { login } from "../../store/user/user-actions";
@@ -67,6 +67,7 @@ const Auth = () => {
           >
             Sign In
           </Button>
+          <Link to="/register"><p style={{color: 'blue'}}>Create new account?</p></Link>
         </VStack>
       </Card>
     </Center>
