@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { errorMessage } from "../../types/user";
 
 interface userType {
-  accessToken?: string | null;
-  errors: errorMessage;
+  userId?: string | null;
+  errors?: errorMessage;
 }
 const initialState: userType = {
-  accessToken: null,
+  userId: null,
   errors: {},
 };
 
@@ -17,6 +17,9 @@ export const userSlice = createSlice({
     register: (state, action: PayloadAction<userType>) => {
       state.errors = action.payload.errors;
     },
+    login: (state, action: PayloadAction<userType>) => {
+      state.userId = action.payload.userId;
+    }
   },
 });
 
