@@ -36,7 +36,6 @@ export const login =
 
 export const getUser = (userId: string) => async (dispatch: AppDispatch) => {
   try {
-    const user = await apis.profile();
     const {
       data: {
         user: { uuid: userId },
