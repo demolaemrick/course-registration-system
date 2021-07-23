@@ -34,7 +34,7 @@ export const login =
     }
   };
 
-export const getUser = (userId: string) => async (dispatch: AppDispatch) => {
+export const getUser = () => async (dispatch: AppDispatch) => {
   try {
     const {
       data: {
