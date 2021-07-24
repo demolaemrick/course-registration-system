@@ -1,6 +1,6 @@
 import { courseActions } from "./course-slice";
-import { AppDispatch } from "./index";
-import * as apis from "../api";
+import { AppDispatch } from "../index";
+import * as apis from "../../api";
 
 export const fetchCourses = () => async (dispatch: AppDispatch) => {  
   try {
