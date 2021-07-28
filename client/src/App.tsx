@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { fetchCourses } from "./store/course-actions";
+import { fetchCourses } from "./store/course/course-actions";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";

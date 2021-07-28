@@ -34,7 +34,7 @@ export default class User extends Model {
   profile_picture: string;
 
   @Column()
-  matric_no: string;
+  matricNo: string;
 
   @Column()
   password: string;
