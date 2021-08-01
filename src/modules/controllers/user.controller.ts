@@ -62,14 +62,12 @@ export const logout = (req: Request, res: Response) => {
     .status(200)
     .json({ message: "Successfully logged out 😏 🍀" });
 };
-export const profile = async (req: Request, res: Response) => {
-  // const userId = req.params.id;
+
+export const getUserProfile = async (req: Request, res: Response) => {
   const userId = req.userId
 
   try {
-    // eslint-disable-next-line
     const user = await User.findOne({ uuid: userId });
-    if (!user) return res.status(404).json({ errorMessage: "Wrong user id" });
     return res.json({ user });
   } catch (err) {
     res.status(500).send(err.message);
