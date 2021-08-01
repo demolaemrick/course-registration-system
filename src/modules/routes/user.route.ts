@@ -18,7 +18,7 @@ router.get("/logout", logout);
 router.patch("/:id/update", updateUser);
 router.get("/profile", authorization, getUserProfile);
 
-router.get("/protected", authorization, (req, res) => {
-  return res.json({ user: { id: req.userId } });
-});
+// router.get("/protected", authorization, (req, res) => {
+//   return res.json({ user: { id: req.userId } });
+// });
 export default router;
