@@ -24,24 +24,19 @@ export const login =
     console.log(credentials);
     try {
       const {
-        data: {
-          user: { uuid: userId },
-        },
+        data: { user },
       } = await apis.login(credentials);
-      dispatch(userActions.login({ userId: userId }));
+      dispatch(userActions.login({ user }));
+      router.push('/profile')
     } catch (err) {
       console.log(err.response.data);
     }
   };
 
-export const getUser = () => async (dispatch: AppDispatch) => {
+export const getUserProfile = () => async (dispatch: AppDispatch) => {
   try {
-    const {
-      data: {
-        user: { uuid: userId },
-      },
-    } = await apis.profile();
-    dispatch(userActions.login({ userId: userId }));
+    const { data: { user } } = await apis.profile();
+    dispatch(userActions.login({ user }));
   } catch (err) {
     console.log(err.response.data);
   }
