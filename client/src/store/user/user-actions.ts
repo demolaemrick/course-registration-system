@@ -21,13 +21,12 @@ export const register =
 export const login =
   (credentials: loginCredentials, router: History) =>
   async (dispatch: AppDispatch) => {
-    console.log(credentials);
     try {
       const {
         data: { user },
       } = await apis.login(credentials);
       dispatch(userActions.login({ user }));
-      router.push('/profile')
+      router.push("/profile");
     } catch (err) {
       console.log(err.response.data);
     }
@@ -35,8 +34,21 @@ export const login =
 
 export const getUserProfile = () => async (dispatch: AppDispatch) => {
   try {
-    const { data: { user } } = await apis.profile();
+    const {
+      data: { user },
+    } = await apis.profile();
     dispatch(userActions.login({ user }));
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const logout = (router: History) => async (dispatch: AppDispatch) => {
+  try {
+    const { data } = await apis.logout();
+    console.log(data);
+    dispatch(userActions.logout());
+    router.push('/')
   } catch (err) {
     console.log(err.response.data);
   }
