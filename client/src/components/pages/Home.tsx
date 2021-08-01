@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Flex, Center } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+
+import { fetchCourses } from "../../store/course/course-actions"
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
 import Table from "../UI/Table";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { courses } = useSelector((state: RootState) => state.courseReducer);
+
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
   return (
     <React.Fragment>
       <Flex justify="center" align="center" h="400px">
