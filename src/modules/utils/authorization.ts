@@ -8,7 +8,6 @@ const authorization = (req: Request, res: Response, next: NextFunction) => {
   }
   try {
     const data = jwt.verify(token, process.env.TOKEN_SECRET) as any
-    console.log(data);
     req.userId = data.id;
     return next();
   } catch {
