@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createUser, login, updateUser, logout, profile } from "../controllers/user.controller";
+import { createUser, login, updateUser, logout, getUserProfile } from "../controllers/user.controller";
 
 import {
   validate,
@@ -16,7 +16,7 @@ router.post("/register", registerValidationRules(), validate, createUser);
 router.post("/auth", loginValidationRules(), validate, login);
 router.get("/logout", logout);
 router.patch("/:id/update", updateUser);
-router.get("/profile", authorization, profile);
+router.get("/profile", authorization, getUserProfile);
 
 router.get("/protected", authorization, (req, res) => {
   return res.json({ user: { id: req.userId } });
