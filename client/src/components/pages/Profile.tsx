@@ -1,3 +1,7 @@
+import { useSelector } from "react-redux"
+import { RootState } from "../../store";
+
+
 import {
   Center,
   Flex,
@@ -10,9 +14,12 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 
+
 import Card from "../UI/Card/Card";
 
 const Profile = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer)
+  console.log(user)
   return (
     <Center h="500px">
       <Card width="50%">
