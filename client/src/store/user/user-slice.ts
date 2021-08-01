@@ -9,7 +9,7 @@ interface userType {
 const initialState: userType = {
   user: {},
   errors: {},
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 export const userSlice = createSlice({
@@ -22,7 +22,11 @@ export const userSlice = createSlice({
     login: (state, action: PayloadAction<userType>) => {
       state.user = action.payload.user;
       state.isLoggedIn = true;
-    }
+    },
+    logout: (state) => {
+      state.isLoggedIn = false;
+      state.user = {};
+    },
   },
 });
 
