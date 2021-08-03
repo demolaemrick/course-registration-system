@@ -16,14 +16,14 @@ const Header = () => {
       </h1>
       <div className={classes["header-items"]}>
         {isLoggedIn ? (
-          <NavLink to="/logout" onClick={() => dispatch(logout(history))}>
-            logout
-          </NavLink>
-        ) : (
           <>
-            <NavLink to="/login">login</NavLink>
             <NavLink to="/profile">profile</NavLink>
+            <NavLink to="/logout" onClick={() => dispatch(logout(history))}>
+              logout
+            </NavLink>
           </>
+        ) : (
+          <NavLink to="/login">login</NavLink>
         )}
       </div>
     </header>
