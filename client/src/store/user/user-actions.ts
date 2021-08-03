@@ -26,7 +26,7 @@ export const login =
         data: { user },
       } = await apis.login(credentials);
       dispatch(userActions.login({ user }));
-      router.push("/profile");
+      router.push("/");
     } catch (err) {
       console.log(err.response.data);
     }
