@@ -13,7 +13,6 @@ import {
 import { coursesType } from "../../types/course";
 
 const TableLayout = ({ courses }: coursesType) => {
-  console.log(courses);
   // const coursesData = courses.map((course) => {
   //   return (
   //     <Tr key={course.uuid}>
