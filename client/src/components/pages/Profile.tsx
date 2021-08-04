@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
 
 import {
   Center,
@@ -14,12 +13,11 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 
-
 import Card from "../UI/Card/Card";
 
 const Profile = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer)
-  console.log(user)
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  console.log(user);
   return (
     <Center h="500px">
       <Card width="50%">
@@ -33,6 +31,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  defaultValue={`${user?.firstName} ${user?.lastName} `}
+                  isReadOnly={user?.firstName !== null}
                 />
               </HStack>
             </FormControl>
@@ -45,6 +45,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  defaultValue={user?.matricNo}
+                  isReadOnly
                 />
               </HStack>
             </FormControl>
@@ -57,6 +59,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  // defaultValue={user?.department}
+
                 />
               </HStack>
             </FormControl>
