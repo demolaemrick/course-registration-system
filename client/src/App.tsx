@@ -18,7 +18,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserProfile());
-    console.log("Effect");
   }, [dispatch]);
 
   return (
