@@ -24,3 +24,16 @@ export interface errorMessage {
   password?: string;
   passwordConfirm?: string;
 }
+
+export interface User extends userType {
+  createdAt: string;
+  college: string | null;
+  department: string | null;
+  gender: string | null;
+  level: string | null;
+  phone: string | null;
+  profile_picture: string | null;
+  programme: string | null;
+  updatedAt: string;
+  uuid: string;
+}
