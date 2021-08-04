@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { errorMessage } from "../../types/user";
+import { errorMessage, User } from "../../types/user";
 
 interface userType {
-  user?: {};
+  user?: User;
   errors?: errorMessage;
   isLoggedIn?: boolean;
 }
 const initialState: userType = {
-  user: {},
+  user: {} as User,
   errors: {},
   isLoggedIn: false,
 };
@@ -25,7 +25,7 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.isLoggedIn = false;
-      state.user = {};
+      state.user = {} as User;
     },
   },
 });
