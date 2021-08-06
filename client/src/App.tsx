@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "./components/Layout/Layout";
@@ -26,12 +26,12 @@ function App() {
         <Route path="/register" component={SignUp} />
         <Route path="/login" component={Login} />
         <Layout>
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
               <Route exact path="/" component={Home} />
               <Route path="/profile" component={Profile} />
             </>
-          )}
+          ) : <Redirect to="/login" />}
         </Layout>
       </Switch>
     </Router>
