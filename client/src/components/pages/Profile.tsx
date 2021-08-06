@@ -37,6 +37,20 @@ const Profile = () => {
               </HStack>
             </FormControl>
 
+            <FormControl id="Gender" mb="3">
+              <HStack>
+                <FormLabel w="73px">Gender:</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="gender"
+                  focusBorderColor="teal.200"
+                  size="sm"
+                  defaultValue={user?.gender !== null ? user?.gender : ""}
+                  isReadOnly={user?.gender !== null}
+                />
+              </HStack>
+            </FormControl>
+
             <FormControl id="matricNo" mb="3">
               <HStack>
                 <FormLabel>Matric No:</FormLabel>
@@ -59,8 +73,10 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
-                  // defaultValue={user?.department}
-
+                  defaultValue={
+                    user?.department !== null ? user?.department : ""
+                  }
+                  isReadOnly={user?.department !== null}
                 />
               </HStack>
             </FormControl>
@@ -73,6 +89,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  defaultValue={user?.college !== null ? user?.college : ""}
+                  isReadOnly={user?.college !== null}
                 />
               </HStack>
             </FormControl>
@@ -86,6 +104,8 @@ const Profile = () => {
                   focusBorderColor="teal.200"
                   // placeholder="Enter your matric number"
                   size="sm"
+                  defaultValue={user?.phone !== null ? user?.phone : ""}
+                  isReadOnly={user?.phone !== null}
                 />
               </HStack>
             </FormControl>
@@ -98,6 +118,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  defaultValue={user?.programme !== null ? user?.programme : ""}
+                  isReadOnly={user?.programme !== null}
                 />
               </HStack>
             </FormControl>
@@ -110,6 +132,8 @@ const Profile = () => {
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
+                  defaultValue={user?.level !== null ? user?.level : ""}
+                  isReadOnly={user?.level !== null}
                 />
               </HStack>
             </FormControl>
