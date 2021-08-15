@@ -33,6 +33,8 @@ export const login =
   };
 
 export const getUserProfile = () => async (dispatch: AppDispatch) => {
+  dispatch(userActions.authLoadStart)
+  console.log("Loading din din loading...")
   try {
     const {
       data: { user },
