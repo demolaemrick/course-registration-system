@@ -1,9 +1,7 @@
-import React from "react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -13,22 +11,22 @@ import {
 import { coursesType } from "../../types/course";
 
 const TableLayout = ({ courses }: coursesType) => {
-  // const coursesData = courses.map((course) => {
-  //   return (
-  //     <Tr key={course.uuid}>
-  //       <Td>{course.course_code}</Td>
-  //       <Td>{course.course_title}</Td>
-  //       <Td>{course.course_unit}</Td>
-  //       <Td isNumeric>
-  //         <Checkbox colorScheme="red" borderColor="red" />
-  //       </Td>
-  //     </Tr>
-  //   );
-  // });
+  const coursesData = courses.map((course) => {
+    return (
+      <Tr key={course.uuid}>
+        <Td>{course.course_code}</Td>
+        <Td>{course.course_title}</Td>
+        <Td>{course.course_unit}</Td>
+        <Td isNumeric>
+          <Checkbox colorScheme="red" borderColor="red" />
+        </Td>
+      </Tr>
+    );
+  });
 
   return (
     <Table variant="striped" colorScheme="teal">
-      <TableCaption>Imperial to metric conversion factors</TableCaption>
+      <TableCaption>Course Outline</TableCaption>
       <Thead>
         <Tr>
           <Th>Course code</Th>
@@ -37,40 +35,7 @@ const TableLayout = ({ courses }: coursesType) => {
           <Th isNumeric>Select</Th>
         </Tr>
       </Thead>
-      <Tbody>
-        <Tr>
-          <Td>inches</Td>
-          <Td>Introduction to computer science</Td>
-          <Td>25.4</Td>
-          <Td isNumeric>
-            <Checkbox colorScheme="red" borderColor="red" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>feet</Td>
-          <Td>centimetres (cm)</Td>
-          <Td>30.48</Td>
-          <Td isNumeric>
-            <Checkbox colorScheme="red" borderColor="red" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>yards</Td>
-          <Td>metres (m)</Td>
-          <Td>0.91444</Td>
-          <Td isNumeric>
-            <Checkbox colorScheme="red" borderColor="red" />
-          </Td>
-        </Tr>
-      </Tbody>
-      <Tfoot>
-        <Tr>
-          <Th>To convert</Th>
-          <Th>into</Th>
-          <Th>multiply by</Th>
-          <Th isNumeric>multiply by</Th>
-        </Tr>
-      </Tfoot>
+      <Tbody>{coursesData}</Tbody>
     </Table>
   );
 };
