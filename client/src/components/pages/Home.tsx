@@ -16,7 +16,7 @@ const Home = () => {
   }, [dispatch]);
   return (
     <React.Fragment>
-      <Flex justify="center" align="center" h="400px">
+      <Flex justify="center" align="center" h="700px">
         <Center w="80%">
           {courses.length > 0 && <Table courses={courses} />}
         </Center>
