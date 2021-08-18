@@ -7,6 +7,9 @@ import {
   Td,
   TableCaption,
   Checkbox,
+  Flex,
+  Box,
+  Spacer,
 } from "@chakra-ui/react";
 import { coursesType } from "../../types/course";
 
@@ -26,7 +29,17 @@ const TableLayout = ({ courses }: coursesType) => {
 
   return (
     <Table variant="striped" colorScheme="teal">
-      <TableCaption>Course Outline</TableCaption>
+      <TableCaption>
+        <Flex>
+          <Box p="4" bg="white.400">
+            Course unit: <strong>22</strong>
+          </Box>
+          <Spacer />
+          <Box p="4" bg="green.400">
+            Submit
+          </Box>
+        </Flex>
+      </TableCaption>
       <Thead>
         <Tr>
           <Th>Course code</Th>
