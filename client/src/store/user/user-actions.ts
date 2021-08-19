@@ -4,6 +4,8 @@ import { AppDispatch } from "../index";
 import { userActions } from "./user-slice";
 import { History } from "history";
 
+
+
 export const register =
   (formData: userFormData, router: History) =>
   async (dispatch: AppDispatch) => {
@@ -44,6 +46,9 @@ export const checkUser = () => async (dispatch: AppDispatch) => {
   }
 };
 
+export const checkIfUserHasCompleteProfile = () => async (dispatch: AppDispatch) => {
+  
+}
 export const logout = (router: History) => async (dispatch: AppDispatch) => {
   try {
     const { data } = await apis.logout();
