@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "universal-cookie";
+
 import { errorMessage, User } from "../../types/user";
+
+const cookies = new Cookies();
+
+const token = cookies.get("accessToken")
 
 interface userType {
   user?: User;
@@ -10,7 +16,7 @@ interface userType {
 const initialState: userType = {
   user: {} as User,
   errors: {},
-  isLoggedIn: false,
+  isLoggedIn: !!token,
   isLoading: false
 };
 
