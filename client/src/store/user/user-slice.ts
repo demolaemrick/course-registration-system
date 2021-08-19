@@ -12,6 +12,7 @@ interface userType {
   errors?: errorMessage;
   isLoggedIn?: boolean;
   isLoading?: boolean;
+  hasCompleteProfile?: boolean;
 }
 const initialState: userType = {
   user: {} as User,
