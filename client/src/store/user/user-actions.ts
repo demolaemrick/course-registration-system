@@ -1,10 +1,16 @@
 import * as apis from "../../api";
-import { userFormData, loginCredentials } from "../../types/user";
+import { userFormData, loginCredentials, User } from "../../types/user";
 import { AppDispatch } from "../index";
 import { userActions } from "./user-slice";
 import { History } from "history";
 
+const checkIfUserHasCompleteProfile = (user: User) => {
+  let doesNotHaveCompleteProfile = !Object.values(user).every(
+    (obj) => obj === null
+  );
 
+  return doesNotHaveCompleteProfile;
+};
 
 export const register =
   (formData: userFormData, router: History) =>
@@ -27,7 +33,10 @@ export const login =
       const {
         data: { user },
       } = await apis.login(credentials);
-      dispatch(userActions.login({ user }));
+
+      let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
+      dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
+
       router.push("/");
     } catch (err) {
       console.log(err.response.data);
@@ -35,26 +44,24 @@ export const login =
   };
 
 export const checkUser = () => async (dispatch: AppDispatch) => {
-  dispatch(userActions.authLoadStart)
+  dispatch(userActions.authLoadStart);
   try {
     const {
       data: { user },
     } = await apis.profile();
-    dispatch(userActions.login({ user }));
+    let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
+    dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
   } catch (err) {
     console.log(err.response.data);
   }
 };
 
-export const checkIfUserHasCompleteProfile = () => async (dispatch: AppDispatch) => {
-  
-}
 export const logout = (router: History) => async (dispatch: AppDispatch) => {
   try {
     const { data } = await apis.logout();
     console.log(data);
     dispatch(userActions.logout());
-    router.push('/')
+    router.push("/");
   } catch (err) {
     console.log(err.response.data);
   }
