@@ -11,9 +11,17 @@ import {
   Box,
   Spacer,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
 import { coursesType } from "../../types/course";
 
 const TableLayout = ({ courses }: coursesType) => {
+  const { doesNotHaveCompleteProfile } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+
+  console.log(doesNotHaveCompleteProfile)
   const coursesData = courses.map((course) => {
     return (
       <Tr key={course.uuid}>
@@ -21,7 +29,11 @@ const TableLayout = ({ courses }: coursesType) => {
         <Td>{course.course_title}</Td>
         <Td>{course.course_unit}</Td>
         <Td isNumeric>
-          <Checkbox colorScheme="red" borderColor="red" />
+          <Checkbox
+            colorScheme="red"
+            borderColor="red"
+            isDisabled={doesNotHaveCompleteProfile}
+          />
         </Td>
       </Tr>
     );
