@@ -12,13 +12,14 @@ interface userType {
   errors?: errorMessage;
   isLoggedIn?: boolean;
   isLoading?: boolean;
-  hasCompleteProfile?: boolean;
+  doesNotHaveCompleteProfile?: boolean;
 }
 const initialState: userType = {
   user: {} as User,
   errors: {},
   isLoggedIn: !!token,
-  isLoading: false
+  isLoading: false,
+  doesNotHaveCompleteProfile: true
 };
 
 export const userSlice = createSlice({
@@ -35,11 +36,13 @@ export const userSlice = createSlice({
       state.user = action.payload.user;
       state.isLoggedIn = true;
       state.isLoading = false;
+      state.doesNotHaveCompleteProfile = action.payload.doesNotHaveCompleteProfile;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = {} as User;
     },
+ 
   },
 });
 
