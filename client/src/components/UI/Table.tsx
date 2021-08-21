@@ -21,7 +21,6 @@ const TableLayout = ({ courses }: coursesType) => {
     (state: RootState) => state.userReducer
   );
 
-  console.log(doesNotHaveCompleteProfile)
   const coursesData = courses.map((course) => {
     return (
       <Tr key={course.uuid}>
