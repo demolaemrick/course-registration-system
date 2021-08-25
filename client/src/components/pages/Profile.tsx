@@ -5,7 +5,7 @@ import {
   Center,
   Flex,
   Box,
-  Spacer,
+  Heading,
   Image,
   HStack,
   FormControl,
@@ -14,32 +14,52 @@ import {
 } from "@chakra-ui/react";
 
 import Card from "../UI/Card/Card";
+import FileButton from "../UI/Buttons/FileButton/FileButton";
+import CustomButton from "../UI/Buttons/CustomButton";
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   return (
-    <Center h="500px">
-      <Card width="50%">
-        <Flex>
-          <Box w="600px">
+    <Center h="600px">
+      <Card width="70%">
+        <Flex w="100%" mx="auto">
+          <Box w="40%" mr="4" bg="tomato">
+            <Heading bg="red" size="md" mb="1" p="3">
+              Your Details
+            </Heading>
             <FormControl id="Name" mb="3">
               <HStack>
-                <FormLabel w="73px">Name:</FormLabel>
+                <FormLabel w="30%">FIRSTNAME</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
                   focusBorderColor="teal.200"
                   size="sm"
-                  defaultValue={`${user?.firstName} ${user?.lastName} `}
+                  defaultValue={user?.firstName}
                   isReadOnly={user?.firstName !== null}
+                />
+              </HStack>
+            </FormControl>
+
+            <FormControl id="Name" mb="3">
+              <HStack>
+                <FormLabel w="30%">LASTNAME</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  size="sm"
+                  lastName
+                  defaultValue={user?.lastName}
+                  isReadOnly={user?.lastName !== null}
                 />
               </HStack>
             </FormControl>
 
             <FormControl id="Gender" mb="3">
               <HStack>
-                <FormLabel w="73px">Gender:</FormLabel>
+                <FormLabel w="30%">GENDER</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="gender"
@@ -53,7 +73,7 @@ const Profile = () => {
 
             <FormControl id="matricNo" mb="3">
               <HStack>
-                <FormLabel>Matric No:</FormLabel>
+                <FormLabel w="30%">MATRIC NO</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
@@ -65,25 +85,9 @@ const Profile = () => {
               </HStack>
             </FormControl>
 
-            <FormControl id="Dept" mb="3">
-              <HStack>
-                <FormLabel w="73px">Dept:</FormLabel>
-                <Input
-                  maxWidth="50%"
-                  type="text"
-                  focusBorderColor="teal.200"
-                  size="sm"
-                  defaultValue={
-                    user?.department !== null ? user?.department : ""
-                  }
-                  isReadOnly={user?.department !== null}
-                />
-              </HStack>
-            </FormControl>
-
             <FormControl id="College" mb="3">
               <HStack>
-                <FormLabel w="73px">College:</FormLabel>
+                <FormLabel w="30%">COLLEGE</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
@@ -97,12 +101,11 @@ const Profile = () => {
 
             <FormControl id="Phone" mb="3">
               <HStack>
-                <FormLabel w="73px">Phone:</FormLabel>
+                <FormLabel w="30%">PHONE</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
                   focusBorderColor="teal.200"
-                  // placeholder="Enter your matric number"
                   size="sm"
                   defaultValue={user?.phone !== null ? user?.phone : ""}
                   isReadOnly={user?.phone !== null}
@@ -110,23 +113,9 @@ const Profile = () => {
               </HStack>
             </FormControl>
 
-            <FormControl id="Programme" mb="3">
-              <HStack>
-                <FormLabel w="73px">Programme: </FormLabel>
-                <Input
-                  maxWidth="50%"
-                  type="text"
-                  focusBorderColor="teal.200"
-                  size="sm"
-                  defaultValue={user?.programme !== null ? user?.programme : ""}
-                  isReadOnly={user?.programme !== null}
-                />
-              </HStack>
-            </FormControl>
-
             <FormControl id="level" mb="3">
               <HStack>
-                <FormLabel w="73px">Level:</FormLabel>
+                <FormLabel w="30%">LEVEL</FormLabel>
                 <Input
                   maxWidth="50%"
                   type="text"
@@ -138,15 +127,63 @@ const Profile = () => {
               </HStack>
             </FormControl>
           </Box>
+          <Box w="40%" mr="4" bg="blue">
+            <Heading bg="red" size="md" mb="1" p="3">
+              Your Details
+            </Heading>
+            <FormControl id="Dept" mb="3">
+              <FormControl id="Programme" mb="3">
+                <HStack>
+                  <FormLabel w="32%">PROGRAMME</FormLabel>
+                  <Input
+                    maxWidth="50%"
+                    type="text"
+                    focusBorderColor="teal.200"
+                    size="sm"
+                    defaultValue={
+                      user?.programme !== null ? user?.programme : ""
+                    }
+                    isReadOnly={user?.programme !== null}
+                  />
+                </HStack>
+              </FormControl>
 
-          <Spacer />
-          <Box>
-            <Image
-              boxSize="150px"
-              objectFit="cover"
-              src="https://bit.ly/dan-abramov"
-              alt="Dan Abramov"
-            />
+              <HStack>
+                <FormLabel w="32%">DEPARTMENT</FormLabel>
+                <Input
+                  maxWidth="50%"
+                  type="text"
+                  focusBorderColor="teal.200"
+                  size="sm"
+                  defaultValue={
+                    user?.department !== null ? user?.department : ""
+                  }
+                  isReadOnly={user?.department !== null}
+                />
+              </HStack>
+            </FormControl>
+          </Box>
+
+          <Box w="30%" bg="blue">
+            <Heading bg="red" size="md" mb="1" p="3">
+              Your Passport
+            </Heading>
+            <Box m="auto" w="150px">
+              <Image
+                boxSize="150px"
+                objectFit="cover"
+                src="https://bit.ly/dan-abramov"
+                alt="Dan Abramov"
+                // style={{ margin: "auto" }}
+              />
+
+              <Center mt="20px">
+                <FileButton>Browse...</FileButton>
+              </Center>
+              <Center mt="20px">
+                <CustomButton>Submit</CustomButton>
+              </Center>
+            </Box>
           </Box>
         </Flex>
       </Card>
