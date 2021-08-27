@@ -1,3 +1,4 @@
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
@@ -20,6 +21,38 @@ import CustomButton from "../UI/Buttons/CustomButton";
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
+  const [userData, setUserData] = useState({
+    gender: "",
+    college: "",
+    phone: "",
+    level: "",
+    department: "",
+    programme: "",
+    profile_picture: "" as string | Blob | undefined,
+  });
+  // console.log(userData)
+
+  const handleChange = (
+    event: FormEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.currentTarget;
+
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleProfileUpdate = () => {
+    console.log(userData);
+  };
+  const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+
+    if (!fileList) return;
+
+    setUserData({ ...userData, profile_picture: fileList[0] });
+  };
 
   return (
     <Center h="600px">
@@ -70,14 +103,16 @@ const Profile = () => {
                     isReadOnly={user?.gender !== null}
                   /> */}
                   <Select
+                    onChange={handleChange}
+                    name="gender"
                     placeholder="Select gender"
-                    maxWidth="50%"x 
-                    focusBorderColor="teal.200"                    
+                    maxWidth="50%"
+                    focusBorderColor="teal.200"
                     size="sm"
                     isReadOnly
                   >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </Select>
                 </HStack>
               </FormControl>
@@ -100,6 +135,7 @@ const Profile = () => {
                 <HStack>
                   <FormLabel w="30%">COLLEGE</FormLabel>
                   <Input
+                    onChange={handleChange}
                     maxWidth="50%"
                     type="text"
                     focusBorderColor="teal.200"
@@ -114,6 +150,7 @@ const Profile = () => {
                 <HStack>
                   <FormLabel w="30%">PHONE</FormLabel>
                   <Input
+                    onChange={handleChange}
                     maxWidth="50%"
                     type="text"
                     focusBorderColor="teal.200"
@@ -137,6 +174,8 @@ const Profile = () => {
                   /> */}
 
                   <Select
+                    name="level"
+                    onChange={handleChange}
                     placeholder="Select level"
                     maxWidth="50%"
                     focusBorderColor="teal.200"
@@ -164,6 +203,7 @@ const Profile = () => {
                   <HStack>
                     <FormLabel w="34%">PROGRAMME</FormLabel>
                     <Input
+                      onChange={handleChange}
                       maxWidth="50%"
                       type="text"
                       focusBorderColor="teal.200"
@@ -179,6 +219,7 @@ const Profile = () => {
                 <HStack>
                   <FormLabel w="34%">DEPARTMENT</FormLabel>
                   <Input
+                    onChange={handleChange}
                     maxWidth="50%"
                     type="text"
                     focusBorderColor="teal.200"
@@ -207,10 +248,10 @@ const Profile = () => {
               />
 
               <Center mt="20px">
-                <FileButton>Browse...</FileButton>
+                <FileButton change={handlePhotoChange}>Browse...</FileButton>
               </Center>
               <Center mt="20px">
-                <CustomButton>Submit</CustomButton>
+                <CustomButton click={handleProfileUpdate}>Submit</CustomButton>
               </Center>
             </Box>
           </Box>
