@@ -10,7 +10,6 @@ export interface userFormData extends userType {
   passwordConfirm: string;
 }
 
-
 export interface loginCredentials {
   matricNo: string;
   password: string;
@@ -36,4 +35,13 @@ export interface User extends userType {
   programme: string | null;
   updatedAt: string;
   uuid: string;
+}
+export interface UserUpdateOptions {
+  gender: string;
+  college: string;
+  phone: string;
+  level: string;
+  department: string;
+  programme: string;
+  profile_picture: string | Blob | undefined;
 }
