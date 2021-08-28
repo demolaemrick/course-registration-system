@@ -11,3 +11,4 @@ export const registerUser = (userData: userFormData) => API.post('/user/register
 export const login = (credentials: loginCredentials) => API.post('/user/auth', credentials)
 export const logout = () => API.get('/user/logout')
 export const profile = () =>  API.get(`/user/profile`)
+export const updateProfile = (userData: any) => API.patch('/user/update', userData)
