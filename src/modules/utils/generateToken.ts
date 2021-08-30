@@ -6,7 +6,7 @@ const generateToken = (user: User) => {
     {
       id: user.uuid,  
     },
-    process.env.TOKEN_SECRET!,
+    process.env.TOKEN_SECRET,
     { expiresIn: "1h" }
   );
 };
