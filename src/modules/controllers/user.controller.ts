@@ -64,7 +64,7 @@ export const logout = (req: Request, res: Response) => {
 };
 
 export const getUserProfile = async (req: Request, res: Response) => {
-  const userId = req.userId
+  const userId = req.userId;
 
   try {
     const user = await User.findOne({ uuid: userId });
@@ -75,18 +75,19 @@ export const getUserProfile = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  const userId = req.params.id;
+  const imageUri = req.file.path;
+
   const { phone, department, college, level, programme, gender } = req.body;
   try {
-    const user = await User.findOne({ uuid: userId });
+    const user = await User.findOne({ uuid: req.userId });
     if (!user) return res.status(404).json({ errorMessage: "Wrong user id" });
 
-    const updatedUser = await User.update(
-      { uuid: userId },
-      { phone, department, college, level, programme, gender }
+    await User.update(
+      { uuid: req.userId },
+      { phone, department, college, level, programme, gender, profile_picture: imageUri }
     );
 
-    return res.json(updatedUser);
+    return res.json(user);
   } catch (err) {
     res.status(500).send(err.message);
   }
