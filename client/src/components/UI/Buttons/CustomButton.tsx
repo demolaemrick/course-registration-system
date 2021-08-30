@@ -4,8 +4,7 @@ const Button = (props: any) => {
   return (
     // Button from facebook.com
     <Box
-      onClick={props.click}
-      type="submit"
+      type={props.type}
       as="button"
       height="24px"
       lineHeight="1.2"
