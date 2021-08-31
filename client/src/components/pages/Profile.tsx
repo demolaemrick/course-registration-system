@@ -64,10 +64,10 @@ const Profile = () => {
     formData.append("gender", userData.gender);
     formData.append("phone", userData.phone);
     formData.append("level", userData.level);
+    formData.append("college", userData.college);
     formData.append("department", userData.department);
     formData.append("programme", userData.programme);
 
-    console.log(formData);
     dispatch(updateUser(formData));
   };
 
