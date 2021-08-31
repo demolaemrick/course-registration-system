@@ -79,13 +79,16 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const { phone, department, college, level, programme, gender } = req.body;
   try {
-    const user = await User.findOne({ uuid: req.userId });
-    if (!user) return res.status(404).json({ errorMessage: "Wrong user id" });
+    const userExists = await User.findOne({ uuid: req.userId });
+    if (!userExists) return res.status(404).json({ errorMessage: "Wrong user id" });
 
     await User.update(
       { uuid: req.userId },
       { phone, department, college, level, programme, gender, profile_picture: imageUri }
     );
+
+
+    const user = await User.findOne({ uuid: req.userId });
 
     return res.json(user);
   } catch (err) {
