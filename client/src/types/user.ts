@@ -31,7 +31,7 @@ export interface User extends userType {
   gender: string | null;
   level: string | null;
   phone: string | null;
-  profile_picture: string | null;
+  profile_picture: string | undefined;
   programme: string | null;
   updatedAt: string;
   uuid: string;
