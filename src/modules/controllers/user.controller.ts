@@ -87,10 +87,9 @@ export const updateUser = async (req: Request, res: Response) => {
       { phone, department, college, level, programme, gender, profile_picture: imageUri }
     );
 
+    const updatedUser = await User.findOne({ uuid: req.userId });
 
-    const user = await User.findOne({ uuid: req.userId });
-
-    return res.json(user);
+    return res.json(updatedUser);
   } catch (err) {
     res.status(500).send(err.message);
   }
