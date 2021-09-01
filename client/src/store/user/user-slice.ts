@@ -38,6 +38,10 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.doesNotHaveCompleteProfile = action.payload.doesNotHaveCompleteProfile;
     },
+    updateUserProfile: (state, action: PayloadAction<userType>) => {
+      state.user = action.payload.user;
+      state.doesNotHaveCompleteProfile = action.payload.doesNotHaveCompleteProfile;
+    },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = {} as User;
