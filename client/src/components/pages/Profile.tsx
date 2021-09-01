@@ -1,5 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { RootState } from "../../store";
 import { updateUser } from "../../store/user/user-actions";
@@ -24,8 +25,11 @@ import FileButton from "../UI/Buttons/FileButton/FileButton";
 import CustomButton from "../UI/Buttons/CustomButton";
 
 const Profile = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user, doesNotHaveCompleteProfile } = useSelector(
+    (state: RootState) => state.userReducer
+  );
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [userData, setUserData] = useState({
     gender: "",
@@ -36,6 +40,8 @@ const Profile = () => {
     programme: "",
     profile_picture: "" as string | Blob,
   });
+
+  const [imageSrc, setImageSrc] = useState("https://bit.ly/dan-abramov");
 
   const handleChange = (
     event: FormEvent<HTMLInputElement | HTMLSelectElement>
@@ -54,6 +60,7 @@ const Profile = () => {
     if (!fileList) return;
 
     setUserData({ ...userData, profile_picture: fileList[0] });
+    setImageSrc(URL.createObjectURL(fileList[0]));
   };
 
   const handleProfileUpdate = (e: FormEvent) => {
@@ -68,7 +75,7 @@ const Profile = () => {
     formData.append("department", userData.department);
     formData.append("programme", userData.programme);
 
-    dispatch(updateUser(formData));
+    dispatch(updateUser(formData, history));
   };
 
   return (
@@ -197,6 +204,7 @@ const Profile = () => {
                       name="level"
                       onChange={handleChange}
                       placeholder="Select level"
+                      defaultValue={user?.level !== null ? user?.level : ""}
                       maxWidth="50%"
                       focusBorderColor="teal.200"
                       size="sm"
@@ -261,20 +269,34 @@ const Profile = () => {
                 Your Passport
               </Heading>
               <Box m="auto" w="150px">
-                <Image
-                  boxSize="150px"
-                  objectFit="cover"
-                  src="https://bit.ly/dan-abramov"
-                  alt="Dan Abramov"
-                  // style={{ margin: "auto" }}
-                />
+                {user?.profile_picture !== null ? (
+                  <Image
+                    boxSize="150px"
+                    objectFit="cover"
+                    src={user?.profile_picture}
+                    alt="My passport"
+                  />
+                ) : (
+                  <Image
+                    boxSize="150px"
+                    objectFit="cover"
+                    src={imageSrc}
+                    alt="My passport"
+                  />
+                )}
 
-                <Center mt="20px">
-                  <FileButton change={handlePhotoChange}>Browse...</FileButton>
-                </Center>
-                <Center mt="20px">
-                  <CustomButton type="submit">Submit</CustomButton>
-                </Center>
+                {doesNotHaveCompleteProfile && (
+                  <>
+                    <Center mt="20px">
+                      <FileButton change={handlePhotoChange}>
+                        Browse...
+                      </FileButton>
+                    </Center>
+                    <Center mt="20px">
+                      <CustomButton type="submit">Submit</CustomButton>
+                    </Center  >
+                  </>
+                )}
               </Box>
             </Box>
           </Flex>
