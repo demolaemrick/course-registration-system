@@ -5,8 +5,8 @@ import { userActions } from "./user-slice";
 import { History } from "history";
 
 const checkIfUserHasCompleteProfile = (user: User) => {
-  let doesNotHaveCompleteProfile = !Object.values(user).every(
-    (obj) => obj === null
+  let doesNotHaveCompleteProfile = Object.values(user).some(
+    (value) => value === null
   );
 
   return doesNotHaveCompleteProfile;
@@ -50,6 +50,7 @@ export const checkUser = () => async (dispatch: AppDispatch) => {
       data: { user },
     } = await apis.profile();
     let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
+    
     dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
   } catch (err) {
     console.log(err.response.data);
@@ -66,3 +67,16 @@ export const logout = (router: History) => async (dispatch: AppDispatch) => {
     console.log(err.response.data);
   }
 };
+
+
+export const updateUser = (userInfo: any, router: History) => async(dispatch: AppDispatch) => {
+  try{
+    const { data : user } = await apis.updateProfile(userInfo)
+
+    let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
+    dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
+    router.push('/')
+  }catch(err){
+    console.log(err.response.data)
+  }
+}
