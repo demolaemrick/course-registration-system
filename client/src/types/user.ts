@@ -36,12 +36,12 @@ export interface User extends userType {
   updatedAt: string;
   uuid: string;
 }
-export interface UserUpdateOptions {
+export interface UserUpdateOptionsType {
   gender: string;
   college: string;
   phone: string;
   level: string;
   department: string;
   programme: string;
-  profile_picture: string | Blob | undefined;
+  profile_picture: string | Blob;
 }
