@@ -24,21 +24,25 @@ import Card from "../UI/Card/Card";
 import FileButton from "../UI/Buttons/FileButton/FileButton";
 import CustomButton from "../UI/Buttons/CustomButton";
 
+import { UserUpdateOptionsType } from "../../types/user"
+
 const Profile = () => {
+
   const { user, doesNotHaveCompleteProfile } = useSelector(
     (state: RootState) => state.userReducer
   );
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [userData, setUserData] = useState({
+
+  const [userData, setUserData] = useState<UserUpdateOptionsType>({
     gender: "",
     college: "",
     phone: "",
     level: "",
     department: "",
     programme: "",
-    profile_picture: "" as string | Blob,
+    profile_picture: "",
   });
 
   const [imageSrc, setImageSrc] = useState("https://bit.ly/dan-abramov");
