@@ -30,7 +30,7 @@ export const registerValidationRules = () => {
         return User.findOne({ matricNo }).then((user) => {
           if (user) {
             return Promise.reject(
-              "Student with this particular matric number has already been created"
+              "Student with this id already exists"
             );
           }
         });
@@ -61,7 +61,11 @@ export const registerValidationRules = () => {
       .matches(/^$|\s+/)
       .withMessage("White space not allowed"),
     // confirm password validation
-    body("passwordConfirm").custom((value, { req }) => {
+    body("passwordConfirm")
+    .trim()
+    .notEmpty()
+    .withMessage("Please confirm your password")
+    .custom((value, { req }) => {
       if (value !== req.body.password) {
         // trow error if passwords do not match
         throw new Error("Password Confirmation does not match password");
@@ -85,7 +89,7 @@ export const loginValidationRules = () => {
 };
 
 export const validate = (req: Request, res: Response, next: NextFunction) => {
-  const errors = validationResult(req);
+  const errors = validationResult(req)
   if (errors.isEmpty()) {
     return next();
   }
@@ -93,6 +97,6 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
   errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
 
   return res.status(422).json({
-    errors: extractedErrors,
+    errors: extractedErrors
   });
 };
