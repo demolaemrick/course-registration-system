@@ -27,7 +27,6 @@ import CustomButton from "../UI/Buttons/CustomButton";
 import { UserUpdateOptionsType } from "../../types/user"
 
 const Profile = () => {
-
   const { user, doesNotHaveCompleteProfile } = useSelector(
     (state: RootState) => state.userReducer
   );
