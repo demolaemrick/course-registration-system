@@ -19,9 +19,10 @@ export const register =
       await apis.registerUser(formData);
       router.push("/login");
     } catch (err) {
-      //   console.log(err.response.data);
       let errors = err.response.data.errors;
+      
       errors = Object.assign({}, ...errors);
+      console.log("after conversion error", errors);
       dispatch(userActions.register({ errors }));
     }
   };
