@@ -12,10 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import { checkUser } from "./store/user/user-actions"
 
-
-
 function App() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
