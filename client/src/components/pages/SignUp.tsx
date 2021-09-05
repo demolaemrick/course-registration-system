@@ -44,7 +44,7 @@ const SignUp = () => {
     dispatch(register(formData, history));
   };
   return (
-    <Center h="650">
+    <Center>
       <Card width="30%">
         <VStack spacing={4}>
           <Text fontSize="4xl">Sign Up</Text>
