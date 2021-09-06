@@ -12,6 +12,11 @@ const checkIfUserHasCompleteProfile = (user: User) => {
   return doesNotHaveCompleteProfile;
 };
 
+const convertArrayToObject = (array: any) => {
+  const object = Object.assign({}, ...array);
+  return object
+}
+
 export const register =
   (formData: RegisterFormData, router: History) =>
   async (dispatch: AppDispatch) => {
@@ -20,7 +25,8 @@ export const register =
       router.push("/login");
     } catch (err) {
       let errors = err.response.data.errors;
-      errors = Object.assign({}, ...errors);
+      // errors = Object.assign({}, ...errors);
+      errors = convertArrayToObject(errors)
       dispatch(userActions.register({ registerValidationError: errors }));
     }
   };
@@ -28,6 +34,7 @@ export const register =
 export const login =
   (credentials: LoginCredentials, router: History) =>
   async (dispatch: AppDispatch) => {
+    dispatch(userActions.loginStart())
     try {
       const {
         data: { user },
@@ -39,6 +46,14 @@ export const login =
       router.push("/");
     } catch (err) {
       console.log(err.response.data);
+      let error = err.response.data.messsage ? err.response.data.messsage : err.response.data.errors
+      if(err.response.data.messsage){
+        dispatch(userActions.loginFail({authError: error}))
+      }      
+
+      let errors = convertArrayToObject(error)
+
+      dispatch(userActions.loginFail({loginValidationError: errors}))
     }
   };
 
