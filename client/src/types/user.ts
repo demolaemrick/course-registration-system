@@ -15,12 +15,14 @@ export interface LoginCredentials {
   password: string;
 }
 
-export interface RegisterValidationError {
+export interface LoginValidationError {
+  matricNo?: string;
+  password?: string;
+}
+export interface RegisterValidationError extends LoginValidationError {
   firstName?: string;
   lastName?: string;
   email?: string;
-  matricNo?: string;
-  password?: string;
   passwordConfirm?: string;
 }
 
