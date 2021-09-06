@@ -24,7 +24,7 @@ import Card from "../UI/Card/Card";
 import FileButton from "../UI/Buttons/FileButton/FileButton";
 import CustomButton from "../UI/Buttons/CustomButton";
 
-import { UserUpdateOptionsType } from "../../types/user"
+import { UserUpdateOptions } from "../../types/user";
 
 const Profile = () => {
   const { user, doesNotHaveCompleteProfile } = useSelector(
@@ -33,8 +33,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
-  const [userData, setUserData] = useState<UserUpdateOptionsType>({
+  const [userData, setUserData] = useState<UserUpdateOptions>({
     gender: "",
     college: "",
     phone: "",
@@ -297,7 +296,7 @@ const Profile = () => {
                     </Center>
                     <Center mt="20px">
                       <CustomButton type="submit">Submit</CustomButton>
-                    </Center  >
+                    </Center>
                   </>
                 )}
               </Box>
