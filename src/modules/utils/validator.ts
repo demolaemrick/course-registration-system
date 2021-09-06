@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
-
 import User from "../../entity/User";
 
 export const registerValidationRules = () => {
@@ -82,9 +81,9 @@ export const loginValidationRules = () => {
       .trim()
       .notEmpty()
       .withMessage("Fill in your matric number"),
-
+      
     // password validation
-    body("password").trim().notEmpty().withMessage("Password is required"),
+    body("password").trim().notEmpty().withMessage("Please, enter your password")
   ];
 };
 
