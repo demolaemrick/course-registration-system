@@ -80,11 +80,20 @@ export const updateUser = async (req: Request, res: Response) => {
   const { phone, department, college, level, programme, gender } = req.body;
   try {
     const userExists = await User.findOne({ uuid: req.userId });
-    if (!userExists) return res.status(404).json({ errorMessage: "Wrong user id" });
+    if (!userExists)
+      return res.status(404).json({ RegisterValidationError: "Wrong user id" });
 
     await User.update(
       { uuid: req.userId },
-      { phone, department, college, level, programme, gender, profile_picture: imageUri }
+      {
+        phone,
+        department,
+        college,
+        level,
+        programme,
+        gender,
+        profile_picture: imageUri,
+      }
     );
 
     const updatedUser = await User.findOne({ uuid: req.userId });
