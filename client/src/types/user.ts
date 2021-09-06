@@ -1,21 +1,21 @@
-export interface userType {
+export interface InitialUser {
   firstName: string;
   lastName: string;
   email: string;
   matricNo: string;
 }
 
-export interface userFormData extends userType {
+export interface RegisterFormData extends InitialUser {
   password: string;
   passwordConfirm: string;
 }
 
-export interface loginCredentials {
+export interface LoginCredentials {
   matricNo: string;
   password: string;
 }
 
-export interface errorMessage {
+export interface RegisterValidationError {
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -24,7 +24,7 @@ export interface errorMessage {
   passwordConfirm?: string;
 }
 
-export interface User extends userType {
+export interface User extends InitialUser {
   createdAt: string;
   college: string | null;
   department: string | null;
@@ -36,7 +36,8 @@ export interface User extends userType {
   updatedAt: string;
   uuid: string;
 }
-export interface UserUpdateOptionsType {
+
+export interface UserUpdateOptions {
   gender: string;
   college: string;
   phone: string;
