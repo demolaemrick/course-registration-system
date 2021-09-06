@@ -13,16 +13,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Card from "../UI/Card/Card";
-import { userFormData } from "../../types/user";
+import { RegisterFormData } from "../../types/user";
 import { register } from "../../store/user/user-actions";
 import { RootState } from "../../store";
 import FormErrorMessage from "../UI/FormErrorMessage";
 
 const SignUp = () => {
-  const errors = useSelector((state: RootState) => state.userReducer.errors);
+  const error = useSelector((state: RootState) => state.userReducer.registerValidationError);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [formData, setFormData] = useState<userFormData>({
+  
+  const [formData, setFormData] = useState<RegisterFormData>({
     firstName: "",
     lastName: "",
     email: "",
@@ -58,9 +59,9 @@ const SignUp = () => {
               size="sm"
               name="firstName"
               onChange={handleChange}
-              isInvalid={!!errors?.firstName}
+              isInvalid={!!error?.firstName}
             />
-            <FormErrorMessage>{errors?.firstName}</FormErrorMessage>
+            <FormErrorMessage>{error?.firstName}</FormErrorMessage>
           </FormControl>
           <FormControl id="secondName" isRequired>
             <FormLabel>Last Name</FormLabel>
@@ -71,9 +72,9 @@ const SignUp = () => {
               size="sm"
               name="lastName"
               onChange={handleChange}
-              isInvalid={!!errors?.lastName}
+              isInvalid={!!error?.lastName}
             />
-            <FormErrorMessage>{errors?.lastName}</FormErrorMessage>
+            <FormErrorMessage>{error?.lastName}</FormErrorMessage>
           </FormControl>
           <FormControl id="email" isRequired>
             <FormLabel>Email Address</FormLabel>
@@ -84,10 +85,10 @@ const SignUp = () => {
               size="sm"
               name="email"
               onChange={handleChange}
-              isInvalid={!!errors?.email}
+              isInvalid={!!error?.email}
             />
 
-            <FormErrorMessage>{errors?.email}</FormErrorMessage>
+            <FormErrorMessage>{error?.email}</FormErrorMessage>
           </FormControl>
           <FormControl id="matricNo" isRequired>
             <FormLabel>Matric Number</FormLabel>
@@ -98,9 +99,9 @@ const SignUp = () => {
               size="sm"
               name="matricNo"
               onChange={handleChange}
-              isInvalid={!!errors?.matricNo}
+              isInvalid={!!error?.matricNo}
             />
-            <FormErrorMessage>{errors?.matricNo}</FormErrorMessage>
+            <FormErrorMessage>{error?.matricNo}</FormErrorMessage>
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
@@ -111,10 +112,10 @@ const SignUp = () => {
               size="sm"
               name="password"
               onChange={handleChange}
-              isInvalid={!!errors?.password}
+              isInvalid={!!error?.password}
             />
 
-            <FormErrorMessage>{errors?.password}</FormErrorMessage>
+            <FormErrorMessage>{error?.password}</FormErrorMessage>
           </FormControl>
           <FormControl id="passwordConfirm" isRequired>
             <FormLabel>Confirm Password</FormLabel>
@@ -125,10 +126,10 @@ const SignUp = () => {
               size="sm"
               name="passwordConfirm"
               onChange={handleChange}
-              isInvalid={!!errors?.passwordConfirm}
+              isInvalid={!!error?.passwordConfirm}
             />
 
-            <FormErrorMessage>{errors?.passwordConfirm}</FormErrorMessage>
+            <FormErrorMessage>{error?.passwordConfirm}</FormErrorMessage>
           </FormControl>
 
           <Button
