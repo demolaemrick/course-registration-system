@@ -1,52 +1,57 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 
-import { errorMessage, User } from "../../types/user";
+import { RegisterValidationError, User } from "../../types/user";
 
 const cookies = new Cookies();
 
-const token = cookies.get("accessToken")
+const token = cookies.get("accessToken");
 
-interface userType {
+interface UserState {
   user?: User;
-  errors?: errorMessage;
+  registerValidationError?: RegisterValidationError;
   isLoggedIn?: boolean;
   isLoading?: boolean;
   doesNotHaveCompleteProfile?: boolean;
 }
-const initialState: userType = {
+const initialState: UserState = {
   user: {} as User,
-  errors: {},
+  registerValidationError: {},
   isLoggedIn: !!token,
   isLoading: false,
-  doesNotHaveCompleteProfile: true
+  doesNotHaveCompleteProfile: true,
 };
 
 export const userSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    register: (state, action: PayloadAction<userType>) => {
-      state.errors = action.payload.errors;
+    register: (state, action: PayloadAction<UserState>) => {
+      state.registerValidationError = action.payload.registerValidationError;
     },
-    authLoadStart: (state) => {
+    load: (state) => {
       state.isLoading = true;
     },
-    login: (state, action: PayloadAction<userType>) => {
+    loginStart: (state) => {
+      state.isLoading = true;
+    },
+    login: (state, action: PayloadAction<UserState>) => {
       state.user = action.payload.user;
       state.isLoggedIn = true;
       state.isLoading = false;
-      state.doesNotHaveCompleteProfile = action.payload.doesNotHaveCompleteProfile;
+      state.doesNotHaveCompleteProfile =
+        action.payload.doesNotHaveCompleteProfile;
     },
-    updateUserProfile: (state, action: PayloadAction<userType>) => {
+    loginFail: (state, action: PayloadAction<UserState>) => {},
+    updateUserProfile: (state, action: PayloadAction<UserState>) => {
       state.user = action.payload.user;
-      state.doesNotHaveCompleteProfile = action.payload.doesNotHaveCompleteProfile;
+      state.doesNotHaveCompleteProfile =
+        action.payload.doesNotHaveCompleteProfile;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = {} as User;
     },
- 
   },
 });
 
