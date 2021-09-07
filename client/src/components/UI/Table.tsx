@@ -14,9 +14,9 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
-import { coursesType } from "../../types/course";
+import { Courses } from "../../types/course";
 
-const TableLayout = ({ courses }: coursesType) => {
+const TableLayout = ({ courses }: Courses) => {
   const { doesNotHaveCompleteProfile } = useSelector(
     (state: RootState) => state.userReducer
   );
