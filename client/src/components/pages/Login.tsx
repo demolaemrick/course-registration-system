@@ -8,14 +8,21 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import { login } from "../../store/user/user-actions";
+import { RootState } from "../../store";
+
 import Card from "../UI/Card/Card";
+import FormErrorMessage from "../UI/FormErrorMessage";
 
 const Auth = () => {
+  const { loginValidationError: validationError, authError } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+
   const matricNoRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -39,6 +46,9 @@ const Auth = () => {
       <Card width="30%">
         <VStack spacing={4}>
           <Text fontSize="4xl">Log In</Text>
+          <Text fontSize="lg" color="red.500">
+            {authError}
+          </Text>
           <FormControl id="matricNo">
             <FormLabel>Matric Number</FormLabel>
             <Input
@@ -47,7 +57,9 @@ const Auth = () => {
               placeholder="Enter your matric number"
               size="sm"
               ref={matricNoRef}
+              isInvalid={!!validationError?.matricNo}
             />
+            <FormErrorMessage>{validationError?.matricNo}</FormErrorMessage>
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
@@ -57,7 +69,9 @@ const Auth = () => {
               placeholder="Enter your password"
               size="sm"
               ref={passwordRef}
+              isInvalid={!!validationError?.password}
             />
+            <FormErrorMessage>{validationError?.password}</FormErrorMessage>
           </FormControl>
           <Button
             onClick={handleSubmit}
@@ -67,7 +81,9 @@ const Auth = () => {
           >
             Sign In
           </Button>
-          <Link to="/register"><p style={{color: 'blue'}}>Create new account?</p></Link>
+          <Link to="/register">
+            <p style={{ color: "blue" }}>Create new account?</p>
+          </Link>
         </VStack>
       </Card>
     </Center>
