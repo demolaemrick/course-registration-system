@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { coursesType } from "../../types/course";
+import { Courses } from "../../types/course";
 
-const initialState: coursesType = {
+const initialState: Courses = {
   courses: [],
 };
 
@@ -9,7 +9,7 @@ export const courseSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    replaceCourses: (state, action: PayloadAction<coursesType>) => {
+    replaceCourses: (state, action: PayloadAction<Courses>) => {
       state.courses = action.payload.courses;
     },
   },
