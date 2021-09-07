@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
 import Table from "../UI/Table";
+import Table2 from "../UI/Table2";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,11 +15,13 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
+
   return (
     <React.Fragment>
       <Flex justify="center" align="center" h="700px">
-        <Center w="80%">
-          {courses.length > 0 && <Table courses={courses} />}
+        <Center w="80%">          
+          {/* {courses.length > 0 && <Table courses={courses} />} */}
+          {courses.length > 0 && <Table2 courses={courses} />}
         </Center>
       </Flex>
     </React.Fragment>
