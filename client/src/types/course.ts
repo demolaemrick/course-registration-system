@@ -1,12 +1,12 @@
-export interface courseType {
+export interface Course {
   uuid: string;
   course_code: string;
   course_title: string;
-  course_unit: string;
+  course_unit: number;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface coursesType {
-  courses: courseType[];
+export interface Courses {
+  courses: Course[];
 }
