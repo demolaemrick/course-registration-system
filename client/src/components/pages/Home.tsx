@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      <Flex justify="center" align="center" h="700px">
+      <Flex justify="center" align="center" h="500px">
         <Center w="80%">          
           {/* {courses.length > 0 && <Table courses={courses} />} */}
           {courses.length > 0 && <Table2 courses={courses} />}
