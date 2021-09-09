@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   withStyles,
   Theme,
@@ -16,7 +16,7 @@ import {
   TablePagination,
   Checkbox,
 } from "@material-ui/core";
-import { Courses } from "../../types/course";
+import { Course } from "../../types/course";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -33,9 +33,9 @@ const StyledTableCell = withStyles((theme: Theme) =>
 const StyledTableRow = withStyles((theme: Theme) =>
   createStyles({
     root: {
-    //   "&:nth-of-type(odd)": {
-    //     backgroundColor: theme.palette.action.hover,
-    //   },
+      //   "&:nth-of-type(odd)": {
+      //     backgroundColor: theme.palette.action.hover,
+      //   },
     },
   })
 )(TableRow);
@@ -46,12 +46,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedTables({ courses }: Courses) {
+interface Props {
+  courses: Course[];
+}
+
+const CustomizedTables = ({ courses }: Props) => {
   const classes = useStyles();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState<string[]>([]);
+  const [courseUnitCount, setCourseUnitCount] = useState<number[]>([2,3,4]);
 
   const numSelected = selected.length;
   const rowCount = courses.length;
@@ -72,12 +77,16 @@ export default function CustomizedTables({ courses }: Courses) {
     setPage(0);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (event: React.MouseEvent<unknown>, name: string, unit: number) => {            
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
+    let units: number[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
+      units = units.concat(unit)
+      console.log(units)
+
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -85,13 +94,34 @@ export default function CustomizedTables({ courses }: Courses) {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
     setSelected(newSelected);
   };
+//   console.log(selected)
+//   console.log(courseUnitCount)
 
+
+//   const handleCourseUnitCount = (
+//     event: React.ChangeEvent<HTMLInputElement>,
+//     courseUnit: number
+//   ) => {
+//     if (event.target.checked) {
+//       const updatedCount = courseUnitCount.concat([courseUnit]);
+//       console.log(updatedCount);
+//     }
+
+//     let courseUnitSum = courseUnits.reduce((acc, cur) =>  acc + cur, 0)
+//     console.log(courseUnitSum)
+//   };
+
+  //   const handleClickAndUnitCount = (event: React.MouseEvent<unknown>, name: string, unit: number) => {
+  //     handleCourseUnitCount(unit)
+  //     handleClick(event, name)
+
+  //   }
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = courses.map((n) => n.course_title);
@@ -102,7 +132,7 @@ export default function CustomizedTables({ courses }: Courses) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -129,27 +159,28 @@ export default function CustomizedTables({ courses }: Courses) {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
                   <StyledTableRow
-                  key={course.uuid}
-                  hover
-                  onClick={(event) => handleClick(event, course.course_title)}
-                  role="checkbox"
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  selected={isItemSelected}                  
-                   >
+                    key={course.uuid}
+                    hover
+                    onClick={(event) => handleClick(event, course.course_title, course.course_unit)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    selected={isItemSelected}
+                  >
                     <StyledTableCell>{index + 1}</StyledTableCell>
                     <StyledTableCell component="th" scope="course">
                       {course.course_code}
                     </StyledTableCell>
                     <StyledTableCell>{course.course_title}</StyledTableCell>
-                    <StyledTableCell>
-                      {course.course_unit}
-                    </StyledTableCell>
+                    <StyledTableCell>{course.course_unit}</StyledTableCell>
 
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isItemSelected}
                         inputProps={{ "aria-labelledby": labelId }}
+                        // onChange={(event) =>
+                        //   handleCourseUnitCount(event, course.course_unit)
+                        // }
                       />
                     </TableCell>
                   </StyledTableRow>
@@ -172,6 +203,8 @@ export default function CustomizedTables({ courses }: Courses) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-    </div>
+    </React.Fragment>
   );
-}
+};
+
+export default CustomizedTables;
