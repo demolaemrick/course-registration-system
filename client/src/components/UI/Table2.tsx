@@ -56,7 +56,7 @@ const CustomizedTables = ({ courses }: Props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState<string[]>([]);
-  const [courseUnitCount, setCourseUnitCount] = useState<number[]>([2,3,4]);
+  const [courseUnitCount, setCourseUnitCount] = useState<number[]>([]);
 
   const numSelected = selected.length;
   const rowCount = courses.length;
@@ -101,18 +101,19 @@ const CustomizedTables = ({ courses }: Props) => {
 //   console.log(courseUnitCount)
 
 
-//   const handleCourseUnitCount = (
-//     event: React.ChangeEvent<HTMLInputElement>,
-//     courseUnit: number
-//   ) => {
-//     if (event.target.checked) {
-//       const updatedCount = courseUnitCount.concat([courseUnit]);
-//       console.log(updatedCount);
-//     }
+  const handleCourseUnitCount = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    courseUnit: number
+  ) => {
+    if (event.target.checked) {
+      let updatedCount = courseUnitCount.concat(courseUnit);
+      console.log(updatedCount);
+    }
+    return []
 
-//     let courseUnitSum = courseUnits.reduce((acc, cur) =>  acc + cur, 0)
-//     console.log(courseUnitSum)
-//   };
+    // let courseUnitSum = courseUnits.reduce((acc, cur) =>  acc + cur, 0)
+    // console.log(courseUnitSum)
+  };
 
   //   const handleClickAndUnitCount = (event: React.MouseEvent<unknown>, name: string, unit: number) => {
   //     handleCourseUnitCount(unit)
@@ -175,9 +176,9 @@ const CustomizedTables = ({ courses }: Props) => {
                       <Checkbox
                         checked={isItemSelected}
                         inputProps={{ "aria-labelledby": labelId }}
-                        // onChange={(event) =>
-                        //   handleCourseUnitCount(event, course.course_unit)
-                        // }
+                        onChange={(event) =>
+                          handleCourseUnitCount(event, course.course_unit)
+                        }
                       />
                     </TableCell>
                   </StyledTableRow>
