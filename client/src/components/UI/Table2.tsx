@@ -77,15 +77,12 @@ const CustomizedTables = ({ courses }: Props) => {
     setPage(0);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string, unit: number) => {            
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {            
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
-    let units: number[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-      units = units.concat(unit)
-      console.log(units)
+      newSelected = newSelected.concat(selected, name);      
 
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
@@ -161,7 +158,7 @@ const CustomizedTables = ({ courses }: Props) => {
                   <StyledTableRow
                     key={course.uuid}
                     hover
-                    onClick={(event) => handleClick(event, course.course_title, course.course_unit)}
+                    onClick={(event) => handleClick(event, course.course_title)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
