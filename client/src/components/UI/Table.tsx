@@ -1,67 +1,176 @@
+import React, { useState } from "react";
+import {
+  withStyles,
+  Theme,
+  createStyles,
+  makeStyles,
+} from "@material-ui/core/styles";
 import {
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
   Checkbox,
-  Flex,
-  Box,
-  Spacer,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+} from "@material-ui/core";
 
-import { Courses } from "../../types/course";
+import { Course } from "../../types/course";
 
-const TableLayout = ({ courses }: Courses) => {
-  const { doesNotHaveCompleteProfile } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  })
+)(TableCell);
 
-  const coursesData = courses.map((course) => {
-    return (
-      <Tr key={course.uuid}>
-        <Td>{course.course_code}</Td>
-        <Td>{course.course_title}</Td>
-        <Td>{course.course_unit}</Td>
-        <Td isNumeric>
-          <Checkbox
-            colorScheme="red"
-            borderColor="red"
-            isDisabled={doesNotHaveCompleteProfile}
-          />
-        </Td>
-      </Tr>
-    );
-  });
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      //   "&:nth-of-type(odd)": {
+      //     backgroundColor: theme.palette.action.hover,
+      //   },
+    },
+  })
+)(TableRow);
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
+
+interface Props {
+  courses: Course[];
+  handleCount: (unitCount: number) => void;
+}
+
+const CustomizedTables = ({ courses, handleCount }: Props) => {
+  const classes = useStyles();
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [selected, setSelected] = useState<Props["courses"]>([]);
+
+  const numSelected = selected.length;
+  const rowCount = courses.length;
+
+  const isSelected = (uuid: string) => selected.find((r) => r.uuid === uuid);
+  
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, courses.length - page * rowsPerPage);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+
+    const newSelect = courses.find((c) => c.uuid === name) || ({} as Course);
+
+    const selectedIndex = selected.indexOf(newSelect);
+
+    let newSelecteds;
+    if(selectedIndex === -1){
+        newSelecteds = [...selected, newSelect];
+    }else {
+        newSelecteds = selected.filter((s) => s.uuid !== name);
+    }
+    
+
+    const courseUnits = newSelecteds.map(c => c.course_unit)
+
+    const newCourseUnitCounts = courseUnits.reduce((acc, cur) => acc + cur, 0)
+
+    handleCount(newCourseUnitCounts)
+    setSelected(newSelecteds);
+  };
 
   return (
-    <Table variant="striped" colorScheme="teal">
-      <TableCaption>
-        <Flex>
-          <Box p="4" bg="white.400">
-            Course unit: <strong>22</strong>
-          </Box>
-          <Spacer />
-          <Box p="4" bg="green.400">
-            Submit
-          </Box>
-        </Flex>
-      </TableCaption>
-      <Thead>
-        <Tr>
-          <Th>Course code</Th>
-          <Th>Course title</Th>
-          <Th>Unit</Th>
-          <Th isNumeric>Select</Th>
-        </Tr>
-      </Thead>
-      <Tbody>{coursesData}</Tbody>
-    </Table>
+    <React.Fragment>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>ID</StyledTableCell>
+              <StyledTableCell>Course title</StyledTableCell>
+              <StyledTableCell>Course code</StyledTableCell>
+              <StyledTableCell>Course unit</StyledTableCell>
+              <StyledTableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  checked={rowCount > 0 && numSelected === rowCount}
+                  disabled
+                  inputProps={{ "aria-label": "select all desserts" }}
+                />
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {courses
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((course, index) => {
+                const isItemSelected = !!isSelected(course.uuid);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (
+                  <StyledTableRow
+                    key={course.uuid}
+                    hover
+                    onClick={(event) => handleClick(event, course.uuid)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    selected={isItemSelected}
+                  >
+                    <StyledTableCell>{index + 1}</StyledTableCell>
+                    <StyledTableCell component="th" scope="course">
+                      {course.course_code}
+                    </StyledTableCell>
+                    <StyledTableCell>{course.course_title}</StyledTableCell>
+                    <StyledTableCell>{course.course_unit}</StyledTableCell>
+
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </TableCell>
+                  </StyledTableRow>
+                );
+              })}
+          </TableBody>
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 53 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )}
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={courses.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
+    </React.Fragment>
   );
 };
 
-export default TableLayout;
+export default CustomizedTables;
