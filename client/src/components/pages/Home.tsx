@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Box } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import { fetchCourses } from "../../store/course/course-actions";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
 import Table from "../UI/Table";
-import Table2 from "../UI/Table2";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const Home = () => {
         style={{ minHeight: "100vh" }}
       >
         <Grid container item xs={8}>
-          {courses.length > 0 && <Table2 courses={courses} handleCount={handleCount} />}
+          {courses.length > 0 && <Table courses={courses} handleCount={handleCount} />}
         </Grid>
         <Grid container item justifyContent="space-between" xs={8}>
           <Grid item>
