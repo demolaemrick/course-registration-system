@@ -16,6 +16,7 @@ import {
   TablePagination,
   Checkbox,
 } from "@material-ui/core";
+
 import { Course } from "../../types/course";
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -48,21 +49,21 @@ const useStyles = makeStyles({
 
 interface Props {
   courses: Course[];
+  handleCount: (unitCount: number) => void;
 }
 
-const CustomizedTables = ({ courses }: Props) => {
+const CustomizedTables = ({ courses, handleCount }: Props) => {
   const classes = useStyles();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [courseUnitCount, setCourseUnitCount] = useState<number[]>([]);
+  const [selected, setSelected] = useState<Props["courses"]>([]);
 
   const numSelected = selected.length;
   const rowCount = courses.length;
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
+  const isSelected = (uuid: string) => selected.find((r) => r.uuid === uuid);
+  
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, courses.length - page * rowsPerPage);
 
@@ -77,56 +78,26 @@ const CustomizedTables = ({ courses }: Props) => {
     setPage(0);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {            
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);      
+    const newSelect = courses.find((c) => c.uuid === name) || ({} as Course);
 
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+    const selectedIndex = selected.indexOf(newSelect);
+
+    let newSelecteds;
+    if(selectedIndex === -1){
+        newSelecteds = [...selected, newSelect];
+    }else {
+        newSelecteds = selected.filter((s) => s.uuid !== name);
     }
+    
 
-    setSelected(newSelected);
-  };
-//   console.log(selected)
-//   console.log(courseUnitCount)
+    const courseUnits = newSelecteds.map(c => c.course_unit)
 
+    const newCourseUnitCounts = courseUnits.reduce((acc, cur) => acc + cur, 0)
 
-  const handleCourseUnitCount = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    courseUnit: number
-  ) => {
-    if (event.target.checked) {
-      let updatedCount = courseUnitCount.concat(courseUnit);
-      console.log(updatedCount);
-    }
-    return []
-
-    // let courseUnitSum = courseUnits.reduce((acc, cur) =>  acc + cur, 0)
-    // console.log(courseUnitSum)
-  };
-
-  //   const handleClickAndUnitCount = (event: React.MouseEvent<unknown>, name: string, unit: number) => {
-  //     handleCourseUnitCount(unit)
-  //     handleClick(event, name)
-
-  //   }
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = courses.map((n) => n.course_title);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
+    handleCount(newCourseUnitCounts)
+    setSelected(newSelecteds);
   };
 
   return (
@@ -143,7 +114,7 @@ const CustomizedTables = ({ courses }: Props) => {
                 <Checkbox
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowCount}
-                  onChange={handleSelectAllClick}
+                  disabled
                   inputProps={{ "aria-label": "select all desserts" }}
                 />
               </StyledTableCell>
@@ -153,13 +124,13 @@ const CustomizedTables = ({ courses }: Props) => {
             {courses
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((course, index) => {
-                const isItemSelected = isSelected(course.course_title);
+                const isItemSelected = !!isSelected(course.uuid);
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
                   <StyledTableRow
                     key={course.uuid}
                     hover
-                    onClick={(event) => handleClick(event, course.course_title)}
+                    onClick={(event) => handleClick(event, course.uuid)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -176,9 +147,6 @@ const CustomizedTables = ({ courses }: Props) => {
                       <Checkbox
                         checked={isItemSelected}
                         inputProps={{ "aria-labelledby": labelId }}
-                        onChange={(event) =>
-                          handleCourseUnitCount(event, course.course_unit)
-                        }
                       />
                     </TableCell>
                   </StyledTableRow>
