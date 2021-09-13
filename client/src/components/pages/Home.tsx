@@ -13,6 +13,9 @@ const Home = () => {
   const { courses } = useSelector((state: RootState) => state.courseReducer);
   const [ totalCourseUnitSelected, setTotalCourseUnitSelected ] = useState<number>(0)
 
+  const handleCount = (unitCount: number) => {
+    setTotalCourseUnitSelected(unitCount)
+  }
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
@@ -27,11 +30,11 @@ const Home = () => {
         style={{ minHeight: "100vh" }}
       >
         <Grid container item xs={8}>
-          {courses.length > 0 && <Table2 courses={courses} />}
+          {courses.length > 0 && <Table2 courses={courses} handleCount={handleCount} />}
         </Grid>
         <Grid container item justifyContent="space-between" xs={8}>
           <Grid item>
-            Course unit: <strong>22</strong>
+            Course unit: <strong>{totalCourseUnitSelected}</strong>
           </Grid>
           <Grid item>Submit</Grid>
         </Grid>
