@@ -11,5 +11,5 @@ export  default class Course extends Model {
     course_title: string;
 
     @Column()
-    course_unit: number;
+    course_unit: number;    
 }
