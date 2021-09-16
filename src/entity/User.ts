@@ -16,19 +16,7 @@ export default class User extends Model {
   gender: string;
 
   @Column({ nullable: true })
-  level: number;
-
-  @Column({ nullable: true })
-  phone: string;
-
-  @Column({ nullable: true })
-  college: string;
-
-  @Column({ nullable: true })
-  department: string;
-
-  @Column({ nullable: true })
-  programme: string;
+  phone: string;  
 
   @Column({ nullable: true })
   profile_picture: string;
