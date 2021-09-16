@@ -15,6 +15,22 @@ export default abstract class Model extends BaseEntity {
   @Column()
   uuid: string;
 
+  @Column({ nullable: true })
+  level: number;
+  
+  @Column({ nullable: true })
+  college: string;
+
+  @Column({ nullable: true })
+  department: string;
+
+  @Column({ nullable: true })
+  session: string;
+
+  @Column({ nullable: true })
+  semester: string;
+
+
   @CreateDateColumn()
   createdAt: Date;
 
