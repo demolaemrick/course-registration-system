@@ -19,6 +19,9 @@ export default class User extends Model {
   phone: string;  
 
   @Column({ nullable: true })
+  programme: string;
+
+  @Column({ nullable: true })
   profile_picture: string;
 
   @Column()
