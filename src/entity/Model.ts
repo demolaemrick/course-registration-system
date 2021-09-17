@@ -30,7 +30,6 @@ export default abstract class Model extends BaseEntity {
   @Column({ nullable: true })
   semester: string;
 
-
   @CreateDateColumn()
   createdAt: Date;
 
