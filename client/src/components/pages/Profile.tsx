@@ -1,4 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -288,7 +289,7 @@ const Profile = () => {
                 )}
 
                 {doesNotHaveCompleteProfile && (
-                  <>
+                  <Fragment>
                     <Center mt="20px">
                       <FileButton change={handlePhotoChange}>
                         Browse...
@@ -297,7 +298,7 @@ const Profile = () => {
                     <Center mt="20px">
                       <CustomButton type="submit">Submit</CustomButton>
                     </Center>
-                  </>
+                  </Fragment>
                 )}
               </Box>
             </Box>
