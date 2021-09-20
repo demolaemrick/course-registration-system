@@ -1,5 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react";
-import { Fragment } from "react";
+import { useState, Fragment, FormEvent, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
