@@ -1,23 +1,23 @@
-import { useEffect } from "react"
-import { BrowserRouter as Router, Switch, Route,  } from "react-router-dom";
-import { useDispatch } from "react-redux"
-
+import { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Layout from "./components/Layout/Layout";
 import Home from "./components/pages/Home";
-import Login from "./components/pages/Login";
+// import Login from "./components/pages/Login";
+import Login from "./components/pages/NewLogin";
 import SignUp from "./components/pages/SignUp";
 import Profile from "./components/pages/Profile";
-import PrivateRoute from "./components/PrivateRoute"; 
+import PrivateRoute from "./components/PrivateRoute";
 
-import { checkUser } from "./store/user/user-actions"
+import { checkUser } from "./store/user/user-actions";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkUser())
-  },[dispatch])
+    dispatch(checkUser());
+  }, [dispatch]);
   return (
     <Router>
       <Switch>
@@ -33,7 +33,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
