@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import {
-  withStyles,
-  Theme,
-  createStyles,
-  makeStyles,
-} from "@material-ui/core/styles";
+import { useState, Fragment } from "react";
+import { styled } from "@mui/material/styles";
+
 import {
   Table,
   TableBody,
@@ -15,37 +11,30 @@ import {
   Paper,
   TablePagination,
   Checkbox,
-} from "@material-ui/core";
+  tableCellClasses,
+} from "@mui/material";
 
 import { Course } from "../../types/course";
 
-const StyledTableCell = withStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  })
-)(TableCell);
-
-const StyledTableRow = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      //   "&:nth-of-type(odd)": {
-      //     backgroundColor: theme.palette.action.hover,
-      //   },
-    },
-  })
-)(TableRow);
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
   },
-});
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 interface Props {
   courses: Course[];
@@ -53,8 +42,6 @@ interface Props {
 }
 
 const CustomizedTables = ({ courses, handleCount }: Props) => {
-  const classes = useStyles();
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState<Props["courses"]>([]);
@@ -63,7 +50,7 @@ const CustomizedTables = ({ courses, handleCount }: Props) => {
   const rowCount = courses.length;
 
   const isSelected = (uuid: string) => selected.find((r) => r.uuid === uuid);
-  
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, courses.length - page * rowsPerPage);
 
@@ -79,31 +66,29 @@ const CustomizedTables = ({ courses, handleCount }: Props) => {
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-
     const newSelect = courses.find((c) => c.uuid === name) || ({} as Course);
 
     const selectedIndex = selected.indexOf(newSelect);
 
     let newSelecteds;
-    if(selectedIndex === -1){
-        newSelecteds = [...selected, newSelect];
-    }else {
-        newSelecteds = selected.filter((s) => s.uuid !== name);
+    if (selectedIndex === -1) {
+      newSelecteds = [...selected, newSelect];
+    } else {
+      newSelecteds = selected.filter((s) => s.uuid !== name);
     }
-    
 
-    const courseUnits = newSelecteds.map(c => c.course_unit)
+    const courseUnits = newSelecteds.map((c) => c.course_unit);
 
-    const newCourseUnitCounts = courseUnits.reduce((acc, cur) => acc + cur, 0)
+    const newCourseUnitCounts = courseUnits.reduce((acc, cur) => acc + cur, 0);
 
-    handleCount(newCourseUnitCounts)
+    handleCount(newCourseUnitCounts);
     setSelected(newSelecteds);
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
@@ -169,7 +154,7 @@ const CustomizedTables = ({ courses, handleCount }: Props) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
