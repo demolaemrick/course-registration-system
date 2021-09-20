@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
+import { useEffect, useState, Fragment } from "react";
+import { Grid } from "@mui/material";
 
 import { fetchCourses } from "../../store/course/course-actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,17 +10,18 @@ import Table from "../UI/Table";
 const Home = () => {
   const dispatch = useDispatch();
   const { courses } = useSelector((state: RootState) => state.courseReducer);
-  const [ totalCourseUnitSelected, setTotalCourseUnitSelected ] = useState<number>(0)
+  const [totalCourseUnitSelected, setTotalCourseUnitSelected] =
+    useState<number>(0);
 
   const handleCount = (unitCount: number) => {
-    setTotalCourseUnitSelected(unitCount)
-  }
+    setTotalCourseUnitSelected(unitCount);
+  };
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Grid
         container
         direction="column"
@@ -29,7 +30,9 @@ const Home = () => {
         style={{ minHeight: "100vh" }}
       >
         <Grid container item xs={8}>
-          {courses.length > 0 && <Table courses={courses} handleCount={handleCount} />}
+          {courses.length > 0 && (
+            <Table courses={courses} handleCount={handleCount} />
+          )}
         </Grid>
         <Grid container item justifyContent="space-between" xs={8}>
           <Grid item>
@@ -38,10 +41,8 @@ const Home = () => {
           <Grid item>Submit</Grid>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 export default Home;
-
-
