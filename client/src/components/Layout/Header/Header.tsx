@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../store/user/user-actions";
@@ -16,12 +17,12 @@ const Header = () => {
       </h1>
       <div className={classes["header-items"]}>
         {isLoggedIn ? (
-          <>
+          <Fragment>
             <NavLink to="/profile">profile</NavLink>
             <NavLink to="/logout" onClick={() => dispatch(logout(history))}>
               logout
             </NavLink>
-          </>
+          </Fragment>
         ) : (
           <NavLink to="/login">login</NavLink>
         )}
