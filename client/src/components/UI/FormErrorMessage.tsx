@@ -1,10 +1,10 @@
-import { Text } from "@chakra-ui/react"
+import { Typography } from "@mui/material";
 
 const FormErrorMessage = (props: any) => {
   return (
-    <Text fontSize="sm" color="red.500" mt="2">
+    <Typography variant="subtitle2" color="warning" mt={2}>
       {props.children}
-    </Text>
+    </Typography>
   );
 };
 
