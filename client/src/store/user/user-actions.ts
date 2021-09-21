@@ -14,8 +14,8 @@ const checkIfUserHasCompleteProfile = (user: User) => {
 
 const convertArrayToObject = (array: any) => {
   const object = Object.assign({}, ...array);
-  return object
-}
+  return object;
+};
 
 export const register =
   (formData: RegisterFormData, router: History) =>
@@ -26,7 +26,7 @@ export const register =
     } catch (err) {
       let errors = err.response.data.errors;
       // errors = Object.assign({}, ...errors);
-      errors = convertArrayToObject(errors)
+      errors = convertArrayToObject(errors);
       dispatch(userActions.register({ registerValidationError: errors }));
     }
   };
@@ -34,7 +34,7 @@ export const register =
 export const login =
   (credentials: LoginCredentials, router: History) =>
   async (dispatch: AppDispatch) => {
-    dispatch(userActions.loginStart())
+    dispatch(userActions.loginStart());
     try {
       const {
         data: { user },
@@ -45,15 +45,16 @@ export const login =
 
       router.push("/");
     } catch (err) {
-      const authError = err.response.data
-      let loginValidationErrors = err.response.data.errors
+      console.log(err.response.data);
+      const authError = err.response.data;
+      let loginValidationErrors = err.response.data.errors;
 
-      if(authError === undefined){
-        let errors = convertArrayToObject(loginValidationErrors)
-        dispatch(userActions.loginFail({loginValidationError: errors}))
+      if (authError === undefined) {
+        let errors = convertArrayToObject(loginValidationErrors);
+        dispatch(userActions.loginFail({ loginValidationError: errors }));
       }
 
-      dispatch(userActions.loginFail({authError: authError.message}))    
+      dispatch(userActions.loginFail({ authError: authError.message }));
     }
   };
 
