@@ -27,7 +27,7 @@ const Home = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        style={{ minHeight: "100vh" }}
+        sx={{ minHeight: "100vh" }}
       >
         <Grid container item xs={8}>
           {courses.length > 0 && (
