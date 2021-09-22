@@ -45,15 +45,14 @@ export const login =
 
       router.push("/");
     } catch (err) {
-      console.log(err.response.data);
       const authError = err.response.data;
       let loginValidationErrors = err.response.data.errors;
 
-      if (authError === undefined) {
+      if (loginValidationErrors !== undefined) {
         let errors = convertArrayToObject(loginValidationErrors);
         dispatch(userActions.loginFail({ loginValidationError: errors }));
+        return;
       }
-
       dispatch(userActions.loginFail({ authError: authError.message }));
     }
   };
