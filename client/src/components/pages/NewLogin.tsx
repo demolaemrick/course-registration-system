@@ -39,8 +39,6 @@ const NewLogin = () => {
       matricNo: enteredMatricNo,
       password: enteredPassword,
     };
-
-    console.log(credentials);
     dispatch(login(credentials, history));
   };
 
