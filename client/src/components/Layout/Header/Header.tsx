@@ -1,34 +1,38 @@
 import { Fragment } from "react";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../store/user/user-actions";
 import { RootState } from "../../../store";
 
-import classes from "./Header.module.css";
-
-const Header = () => {
+export default function ButtonAppBar() {
   const { isLoggedIn } = useSelector((state: RootState) => state.userReducer);
   const dispatch = useDispatch();
   const history = useHistory();
-  return (
-    <header className={classes.header}>
-      <h1>
-        <NavLink to="/">Achievers</NavLink>
-      </h1>
-      <div className={classes["header-items"]}>
-        {isLoggedIn ? (
-          <Fragment>
-            <NavLink to="/profile">profile</NavLink>
-            <NavLink to="/logout" onClick={() => dispatch(logout(history))}>
-              logout
-            </NavLink>
-          </Fragment>
-        ) : (
-          <NavLink to="/login">login</NavLink>
-        )}
-      </div>
-    </header>
-  );
-};
 
-export default Header;
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <NavLink to="/">Achievers</NavLink>
+          </Typography>
+          {isLoggedIn ? (
+            <Fragment>
+              <Button color="inherit">
+                <NavLink to="/profile">profile</NavLink>
+              </Button>{" "}
+              <Button color="inherit" onClick={() => dispatch(logout(history))}>
+                <NavLink to="/logout">logout</NavLink>
+              </Button>
+            </Fragment>
+          ) : (
+            <Button color="inherit">
+              <NavLink to="/login">login</NavLink>
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
