@@ -18,7 +18,7 @@ import { Course } from "../../types/course";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.success.main,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
