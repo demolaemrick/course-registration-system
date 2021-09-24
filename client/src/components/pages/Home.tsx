@@ -1,5 +1,5 @@
 import { useEffect, useState, Fragment } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 
 import { fetchCourses } from "../../store/course/course-actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,16 +29,22 @@ const Home = () => {
         alignItems="center"
         sx={{ minHeight: "100vh" }}
       >
-        <Grid container item xs={8}>
+        <Grid item>
           {courses.length > 0 && (
             <Table courses={courses} handleCount={handleCount} />
           )}
         </Grid>
-        <Grid container item justifyContent="space-between" xs={8}>
-          <Grid item>
-            Course unit: <strong>{totalCourseUnitSelected}</strong>
+        <Grid item xs={8} mt={2}>
+          <Grid container justifyContent="space-between" sx={{ minWidth: 700 }}>
+            <Grid item>
+              Course unit: <strong>{totalCourseUnitSelected}</strong>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="success">
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>Submit</Grid>
         </Grid>
       </Grid>
     </Fragment>
