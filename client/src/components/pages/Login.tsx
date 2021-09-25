@@ -1,13 +1,15 @@
-import { useRef } from "react";
+import { useRef, FormEvent } from "react";
+
 import {
-  Center,
+  Paper,
   FormControl,
   FormLabel,
-  Input,
-  VStack,
+  OutlinedInput,
+  Box,
   Button,
-  Text,
-} from "@chakra-ui/react";
+  Typography,
+} from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -15,10 +17,9 @@ import { useHistory } from "react-router-dom";
 import { login } from "../../store/user/user-actions";
 import { RootState } from "../../store";
 
-import Card from "../UI/Card/Card";
 import FormErrorMessage from "../UI/FormErrorMessage";
 
-const Auth = () => {
+const Login = () => {
   const { loginValidationError: validationError, authError } = useSelector(
     (state: RootState) => state.userReducer
   );
@@ -29,7 +30,8 @@ const Auth = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     const enteredMatricNo = matricNoRef.current!.value;
     const enteredPassword = passwordRef.current!.value;
 
@@ -37,57 +39,75 @@ const Auth = () => {
       matricNo: enteredMatricNo,
       password: enteredPassword,
     };
-
     dispatch(login(credentials, history));
   };
 
   return (
-    <Center h="600">
-      <Card width="30%">
-        <VStack spacing={4}>
-          <Text fontSize="4xl">Log In</Text>
-          <Text fontSize="lg" color="red.500">
-            {authError}
-          </Text>
-          <FormControl id="matricNo">
-            <FormLabel>Matric Number</FormLabel>
-            <Input
-              type="text"
-              focusBorderColor="teal.200"
-              placeholder="Enter your matric number"
-              size="sm"
-              ref={matricNoRef}
-              isInvalid={!!validationError?.matricNo}
-            />
-            <FormErrorMessage>{validationError?.matricNo}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor="teal.200"
-              placeholder="Enter your password"
-              size="sm"
-              ref={passwordRef}
-              isInvalid={!!validationError?.password}
-            />
-            <FormErrorMessage>{validationError?.password}</FormErrorMessage>
-          </FormControl>
-          <Button
-            onClick={handleSubmit}
-            mt={4}
-            colorScheme="teal"
-            type="submit"
-          >
-            Sign In
-          </Button>
-          <Link to="/register">
-            <p style={{ color: "blue" }}>Create new account?</p>
-          </Link>
-        </VStack>
-      </Card>
-    </Center>
+    <Box
+      component="form"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "600px",
+      }}
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
+      <Paper
+        elevation={4}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          p: 4,
+          minWidth: "30%",
+        }}
+      >
+        <Typography variant="h3" mb={2}>
+          Log In
+        </Typography>
+        <Typography variant="subtitle1" color="error" mb={2}>
+          {authError}
+        </Typography>
+        <FormControl sx={{ width: "95%", mb: 2 }} size="small">
+          <FormLabel htmlFor="matricNo">Student Id</FormLabel>
+          <OutlinedInput
+            id="matricNo"
+            placeholder="Please enter matric number"
+            type="text"
+            inputRef={matricNoRef}
+            error={!!validationError?.matricNo}
+          />
+          <FormErrorMessage>{validationError?.matricNo}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl sx={{ width: "95%", mb: 2 }} size="small">
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <OutlinedInput
+            id="password"
+            placeholder="Please enter password"
+            type="password"
+            inputRef={passwordRef}
+            error={!!validationError?.password}
+          />
+          <FormErrorMessage>{validationError?.password}</FormErrorMessage>
+        </FormControl>
+        <Button
+          variant="contained"
+          sx={{ my: 3 }}
+          color="success"
+          onClick={handleSubmit}
+        >
+          Sign In
+        </Button>
+        <Link to="/register">
+          <Typography variant="subtitle2">Create new account?</Typography>
+        </Link>
+      </Paper>
+    </Box>
   );
 };
 
-export default Auth;
+export default Login;
