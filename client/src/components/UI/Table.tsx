@@ -17,10 +17,6 @@ import {
 import { Course } from "../../types/course";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.success.main,
-    color: theme.palette.common.white,
-  },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
@@ -87,11 +83,11 @@ const CustomizedTables = ({ courses, handleCount }: Props) => {
 
   return (
     <Fragment>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} elevation={4}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>ID</StyledTableCell>
+              <StyledTableCell>S/N</StyledTableCell>
               <StyledTableCell>Course title</StyledTableCell>
               <StyledTableCell>Course code</StyledTableCell>
               <StyledTableCell>Course unit</StyledTableCell>
