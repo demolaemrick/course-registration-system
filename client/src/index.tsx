@@ -15,15 +15,16 @@ import App from "./App";
 const theme = createTheme({
   palette: {
     primary: {
-      // light: teal[200],
       main: "#004c23",
-      // dark: teal[800],
     },
     secondary: {
-      light: pink[200],
-      main: pink[700],
-      dark: pink[900],
+      main: "#b39e00",
     },
+    // secondary: {
+    //   light: pink[200],
+    //   main: pink[700],
+    //   dark: pink[900],
+    // },
   },
 });
 
