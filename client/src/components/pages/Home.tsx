@@ -43,7 +43,7 @@ const Home = () => {
               Course unit: <strong>{totalCourseUnitSelected}</strong>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="success">
+              <Button variant="contained" color="primary">
                 Register
               </Button>
             </Grid>
