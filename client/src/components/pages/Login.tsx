@@ -97,7 +97,7 @@ const Login = () => {
         <Button
           variant="contained"
           sx={{ my: 3 }}
-          color="success"
+          color="primary"
           onClick={handleSubmit}
         >
           Sign In
