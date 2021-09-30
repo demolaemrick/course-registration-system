@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { pink } from "@mui/material/colors";
 
 import { store } from "./store";
 
