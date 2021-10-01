@@ -87,7 +87,6 @@ const Profile = () => {
     });
   };
 
-  console.log(userData);
   const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fileList = event.target.files;
 
@@ -99,7 +98,6 @@ const Profile = () => {
 
   const handleProfileUpdate = (e: FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("profile_picture", userData.profile_picture);
     formData.append("gender", userData.gender);
@@ -125,6 +123,7 @@ const Profile = () => {
           noValidate
           autoComplete="off"
           onSubmit={handleProfileUpdate}
+          encType="multipart/form-data"
         >
           <Paper
             elevation={4}
@@ -155,6 +154,7 @@ const Profile = () => {
                           <TextField
                             id={input.id}
                             variant="outlined"
+                            required
                             type="text"
                             name={input.id}
                             onChange={handleChange}
@@ -186,7 +186,6 @@ const Profile = () => {
                           <FormLabel htmlFor={select.id} sx={{ width: 100 }}>
                             {select.name}
                           </FormLabel>
-                          {console.log(select.id)}
                           <Select
                             name={select.id}
                             variant="outlined"
@@ -207,7 +206,6 @@ const Profile = () => {
                                 {value}
                               </MenuItem>
                             ))}
-                            {/* {console.log(select.values.map((value) => value))} */}
                           </Select>
                         </Box>
                       </FormControl>
@@ -238,6 +236,7 @@ const Profile = () => {
                           </FormLabel>
                           <TextField
                             variant="outlined"
+                            required
                             id={input.id}
                             name={input.id}
                             type="text"
@@ -269,8 +268,12 @@ const Profile = () => {
                   sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
                 >
                   <Avatar
-                    sx={{ width: 200, height: 150, mb: 2 }}
-                    src={imageSrc}
+                    sx={{ width: 200, height: 200, mb: 2, objectFit: "cover" }}
+                    src={
+                      user?.profile_picture !== null
+                        ? user?.profile_picture
+                        : imageSrc
+                    }
                     variant="square"
                     alt=""
                   />
@@ -285,7 +288,9 @@ const Profile = () => {
                       <UploadButton change={handlePhotoChange}>
                         Upload
                       </UploadButton>
-                      <Button variant="contained">Submit</Button>
+                      <Button variant="contained" type="submit">
+                        Submit
+                      </Button>
                     </Box>
                   )}
                 </Box>
