@@ -7,7 +7,13 @@ const Input = styled("input")({
 const UploadButton = (props: any) => {
   return (
     <label htmlFor="contained-button-file">
-      <Input accept="image/*" id="contained-button-file" multiple type="file" />
+      <Input
+        accept="image/*"
+        id="contained-button-file"
+        onChange={props.change}
+        multiple
+        type="file"
+      />
       <Button variant="text" component="span">
         {props.children}
       </Button>
