@@ -23,7 +23,7 @@ export const register =
     try {
       await apis.registerUser(formData);
       router.push("/login");
-    } catch (err) {
+    } catch (err: any) {
       let errors = err.response.data.errors;
       // errors = Object.assign({}, ...errors);
       errors = convertArrayToObject(errors);
@@ -44,7 +44,7 @@ export const login =
       dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
 
       router.push("/");
-    } catch (err) {
+    } catch (err: any) {
       const authError = err.response.data;
       let loginValidationErrors = err.response.data.errors;
 
@@ -66,7 +66,7 @@ export const checkUser = () => async (dispatch: AppDispatch) => {
     let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
 
     dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
-  } catch (err) {
+  } catch (err: any) {
     console.log(err.response.data);
   }
 };
@@ -77,7 +77,7 @@ export const logout = (router: History) => async (dispatch: AppDispatch) => {
     console.log(data);
     dispatch(userActions.logout());
     router.push("/");
-  } catch (err) {
+  } catch (err: any) {
     console.log(err.response.data);
   }
 };
@@ -90,7 +90,7 @@ export const updateUser =
       let doesNotHaveCompleteProfile = checkIfUserHasCompleteProfile(user);
       dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
       router.push("/");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.response.data);
     }
   };
