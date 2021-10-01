@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -14,33 +14,43 @@ import {
   Typography,
   FormControl,
   FormLabel,
-  OutlinedInput,
   Stack,
   MenuItem,
   Avatar,
   Button,
   TextField,
 } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import UploadButton from "../UI/Buttons/UploadButton";
 
 import AvatarImage from "../../assets/Avatar.jpg";
 
 const inputFields = [
-  { id: "firstName", name: "FIRSNAME" },
+  { id: "firstName", name: "FIRSTNAME" },
   { id: "lastName", name: "LASTNAME" },
   { id: "matricNo", name: "STUDENT ID" },
   { id: "phone", name: "PHONE" },
   { id: "programme", name: "PRGORGRAMME" },
   { id: "department", name: "DEPARTMENT" },
+  { id: "college", name: "COLLEGE" },
 ];
 
 const selects = [
-  { id: "gender", name: "GENDER", values: ["male", "female"] },
-  { id: "level", name: "LEVEL", values: [100, 200, 300, 400, 500] },
+  {
+    id: "gender",
+    name: "GENDER",
+    values: ["male", "female"],
+  },
+  {
+    id: "level",
+    name: "LEVEL",
+    values: ["100", "200", "300", "400", "500"],
+  },
 ];
+
 const Profile = () => {
-  const { user, doesNotHaveCompleteProfile } = useSelector(
+  const { user, doesNotHaveCompleteProfile, isLoading } = useSelector(
     (state: RootState) => state.userReducer
   );
 
@@ -68,6 +78,16 @@ const Profile = () => {
     });
   };
 
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
+
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  console.log(userData);
   const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fileList = event.target.files;
 
@@ -92,146 +112,189 @@ const Profile = () => {
     dispatch(updateUser(formData, history));
   };
   return (
-    <Box
-      component="form"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "600px",
-      }}
-      noValidate
-      autoComplete="off"
-      onSubmit={handleProfileUpdate}
-    >
-      <Paper
-        elevation={4}
-        sx={{ padding: 2, minWidth: 800, backgroundColor: "#8de4af" }}
-      >
-        <Grid container spacing={4}>
-          <Grid item>
-            <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
-              Your details
-            </Typography>
-            <Box sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}>
-              <Stack direction="column">
-                {inputFields.slice(0, 3).map((input) => (
-                  <FormControl key={input.id} sx={{ mb: 2 }} size="small">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <FormLabel htmlFor={input.id} sx={{ width: 100 }}>
-                        {input.name}
-                      </FormLabel>
-                      <OutlinedInput
-                        id={input.id}
-                        type="text"
-                        name={input.name}
-                        onChange={handleChange}
-                      />
-                    </Box>
-                  </FormControl>
-                ))}
-
-                {selects.map((select) => (
-                  <FormControl key={select.id} sx={{ mb: 2 }} size="small">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <FormLabel htmlFor={select.id} sx={{ width: 100 }}>
-                        {select.name}
-                      </FormLabel>
-
-                      <TextField
-                        select
-                        name={select.id}
-                        variant="outlined"
-                        onChange={handleChange}
-                        sx={{ minWidth: 210 }}
-                        size="small"
-                        value={
-                          select.id === "gender"
-                            ? userData.gender
-                            : userData.level
-                        }
-                      >
-                        <MenuItem disabled value="">
-                          <em>Placeholder</em>
-                        </MenuItem>
-                        {select.values.map((value, index) => (
-                          <MenuItem key={index} value={value}>
-                            {value}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-                  </FormControl>
-                ))}
-              </Stack>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
-              Your Details
-            </Typography>
-            <Box sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}>
-              <Stack direction="column">
-                {inputFields.slice(4, 6).map((input) => (
-                  <FormControl key={input.id} sx={{ mb: 2 }} size="small">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <FormLabel htmlFor={input.id} sx={{ width: 130 }}>
-                        {input.name}
-                      </FormLabel>
-                      <OutlinedInput id={input.id} type="text" />
-                    </Box>
-                  </FormControl>
-                ))}
-              </Stack>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6" sx={{ backgroundColor: "red" }}>
-              Your Passport
-            </Typography>
-            <Box sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}>
-              <Avatar
-                sx={{ width: 200, height: 150, mb: 2 }}
-                src={imageSrc}
-                variant="square"
-                alt=""
-              />
-              {doesNotHaveCompleteProfile && (
+    <Fragment>
+      {!isLoading && (
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "600px",
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleProfileUpdate}
+        >
+          <Paper
+            elevation={4}
+            sx={{ padding: 2, minWidth: 800, backgroundColor: "#8de4af" }}
+          >
+            <Grid container spacing={4}>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                  Your details
+                </Typography>
                 <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
                 >
-                  <UploadButton change={handlePhotoChange}>Upload</UploadButton>
-                  <Button variant="contained">Submit</Button>
+                  <Stack direction="column">
+                    {inputFields.slice(0, 3).map((input) => (
+                      <FormControl key={input.id} sx={{ mb: 2 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <FormLabel htmlFor={input.id} sx={{ width: 100 }}>
+                            {input.name}
+                          </FormLabel>
+                          <TextField
+                            id={input.id}
+                            variant="outlined"
+                            type="text"
+                            name={input.id}
+                            onChange={handleChange}
+                            size="small"
+                            value={
+                              user?.[input.id] === null
+                                ? userData[input.id]
+                                : undefined
+                            }
+                            defaultValue={
+                              user?.[input.id] !== null
+                                ? user?.[input.id]
+                                : undefined
+                            }
+                            disabled={user?.[input.id] !== null}
+                          />
+                        </Box>
+                      </FormControl>
+                    ))}
+
+                    {selects.map((select) => (
+                      <FormControl key={select.id} sx={{ mb: 2 }} size="small">
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <FormLabel htmlFor={select.id} sx={{ width: 100 }}>
+                            {select.name}
+                          </FormLabel>
+                          {console.log(select.id)}
+                          <Select
+                            name={select.id}
+                            variant="outlined"
+                            onChange={handleSelectChange}
+                            sx={{ minWidth: 210 }}
+                            size="small"
+                            value={
+                              select.id === "gender"
+                                ? userData.gender
+                                : userData.level
+                            }
+                          >
+                            <MenuItem disabled value="">
+                              <em>Placeholder</em>
+                            </MenuItem>
+                            {select.values.map((value, index) => (
+                              <MenuItem key={index} value={value}>
+                                {value}
+                              </MenuItem>
+                            ))}
+                            {/* {console.log(select.values.map((value) => value))} */}
+                          </Select>
+                        </Box>
+                      </FormControl>
+                    ))}
+                  </Stack>
                 </Box>
-              )}
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Box>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                  Your Details
+                </Typography>
+                <Box
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                >
+                  <Stack direction="column">
+                    {inputFields.slice(4).map((input) => (
+                      <FormControl key={input.id} sx={{ mb: 2 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <FormLabel htmlFor={input.id} sx={{ width: 130 }}>
+                            {input.name}
+                          </FormLabel>
+                          <TextField
+                            variant="outlined"
+                            id={input.id}
+                            name={input.id}
+                            type="text"
+                            size="small"
+                            onChange={handleChange}
+                            value={
+                              user?.[input.id] === null
+                                ? userData[input.id]
+                                : undefined
+                            }
+                            defaultValue={
+                              user?.[input.id] !== null
+                                ? user?.[input.id]
+                                : undefined
+                            }
+                            disabled={user?.[input.id] !== null}
+                          />
+                        </Box>
+                      </FormControl>
+                    ))}
+                  </Stack>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "red" }}>
+                  Your Passport
+                </Typography>
+                <Box
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                >
+                  <Avatar
+                    sx={{ width: 200, height: 150, mb: 2 }}
+                    src={imageSrc}
+                    variant="square"
+                    alt=""
+                  />
+                  {doesNotHaveCompleteProfile && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <UploadButton change={handlePhotoChange}>
+                        Upload
+                      </UploadButton>
+                      <Button variant="contained">Submit</Button>
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Box>
+      )}
+    </Fragment>
   );
 };
 
