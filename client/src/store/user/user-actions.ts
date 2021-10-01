@@ -91,6 +91,6 @@ export const updateUser =
       dispatch(userActions.login({ user, doesNotHaveCompleteProfile }));
       router.push("/");
     } catch (err: any) {
-      console.log(err.response.data);
+      console.log(err);
     }
   };
