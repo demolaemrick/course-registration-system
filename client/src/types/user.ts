@@ -37,6 +37,7 @@ export interface User extends InitialUser {
   programme: string | null;
   updatedAt: string;
   uuid: string;
+  [key: string]: any;
 }
 
 export interface UserUpdateOptions {
@@ -47,4 +48,5 @@ export interface UserUpdateOptions {
   department: string;
   programme: string;
   profile_picture: string | Blob;
+  [key: string]: any;
 }
