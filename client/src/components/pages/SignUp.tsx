@@ -19,10 +19,12 @@ import { RootState } from "../../store";
 import FormErrorMessage from "../UI/FormErrorMessage";
 
 const SignUp = () => {
-  const error = useSelector((state: RootState) => state.userReducer.registerValidationError);
+  const error = useSelector(
+    (state: RootState) => state.userReducer.registerValidationError
+  );
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const [formData, setFormData] = useState<RegisterFormData>({
     firstName: "",
     lastName: "",
