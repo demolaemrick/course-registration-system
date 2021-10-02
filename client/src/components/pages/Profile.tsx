@@ -1,35 +1,59 @@
-import { useState, Fragment, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { RootState } from "../../store";
 import { updateUser } from "../../store/user/user-actions";
 
-import {
-  Center,
-  Flex,
-  Box,
-  Heading,
-  Image,
-  HStack,
-  FormControl,
-  Input,
-  FormLabel,
-  Select,
-} from "@chakra-ui/react";
-
-// import { Formik, Form } from "formik";
-
-import Card from "../UI/Card/Card";
-import FileButton from "../UI/Buttons/FileButton/FileButton";
-import CustomButton from "../UI/Buttons/CustomButton";
-
 import { UserUpdateOptions } from "../../types/user";
 
+import {
+  Grid,
+  Box,
+  Paper,
+  Typography,
+  FormControl,
+  FormLabel,
+  Stack,
+  MenuItem,
+  Avatar,
+  Button,
+  TextField,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
+import UploadButton from "../UI/Buttons/UploadButton";
+
+import AvatarImage from "../../assets/Avatar.jpg";
+
+const inputFields = [
+  { id: "firstName", name: "FIRSTNAME" },
+  { id: "lastName", name: "LASTNAME" },
+  { id: "matricNo", name: "STUDENT ID" },
+  { id: "phone", name: "PHONE" },
+  { id: "programme", name: "PRGORGRAMME" },
+  { id: "department", name: "DEPARTMENT" },
+  { id: "college", name: "COLLEGE" },
+];
+
+const selects = [
+  {
+    id: "gender",
+    name: "GENDER",
+    values: ["male", "female"],
+  },
+  {
+    id: "level",
+    name: "LEVEL",
+    values: ["100", "200", "300", "400", "500"],
+  },
+];
+
 const Profile = () => {
-  const { user, doesNotHaveCompleteProfile } = useSelector(
+  const { user, doesNotHaveCompleteProfile, isLoading } = useSelector(
     (state: RootState) => state.userReducer
   );
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -43,12 +67,19 @@ const Profile = () => {
     profile_picture: "",
   });
 
-  const [imageSrc, setImageSrc] = useState("https://bit.ly/dan-abramov");
+  const [imageSrc, setImageSrc] = useState(AvatarImage);
 
-  const handleChange = (
-    event: FormEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
+
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
 
     setUserData({
       ...userData,
@@ -67,7 +98,6 @@ const Profile = () => {
 
   const handleProfileUpdate = (e: FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("profile_picture", userData.profile_picture);
     formData.append("gender", userData.gender);
@@ -79,232 +109,197 @@ const Profile = () => {
 
     dispatch(updateUser(formData, history));
   };
-
   return (
-    <Center h="600px">
-      <Card width="70%">
-        <form onSubmit={handleProfileUpdate} encType="multipart/form-data">
-          <Flex w="100%" mx="auto">
-            <Box w="40%" mr="4" bg="gray.100">
-              <Heading bg="teal.100" size="md" mb="1" p="3">
-                Your Details
-              </Heading>
-              <Box pl="2">
-                <FormControl id="firstName" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">FIRSTNAME</FormLabel>
-                    <Input
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={user?.firstName}
-                      isReadOnly={user?.firstName !== null}
-                    />
-                  </HStack>
-                </FormControl>
+    <Fragment>
+      {!isLoading && (
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "600px",
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleProfileUpdate}
+          encType="multipart/form-data"
+        >
+          <Paper
+            elevation={4}
+            sx={{ padding: 2, minWidth: 800, backgroundColor: "#8de4af" }}
+          >
+            <Grid container spacing={4}>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                  Your details
+                </Typography>
+                <Box
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                >
+                  <Stack direction="column">
+                    {inputFields.slice(0, 3).map((input) => (
+                      <FormControl key={input.id} sx={{ mb: 2 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <FormLabel htmlFor={input.id} sx={{ width: 100 }}>
+                            {input.name}
+                          </FormLabel>
+                          <TextField
+                            id={input.id}
+                            variant="outlined"
+                            required
+                            type="text"
+                            name={input.id}
+                            onChange={handleChange}
+                            size="small"
+                            value={
+                              user?.[input.id] === null
+                                ? userData[input.id]
+                                : undefined
+                            }
+                            defaultValue={
+                              user?.[input.id] !== null
+                                ? user?.[input.id]
+                                : undefined
+                            }
+                            disabled={user?.[input.id] !== null}
+                          />
+                        </Box>
+                      </FormControl>
+                    ))}
 
-                <FormControl id="lastName" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">LASTNAME</FormLabel>
-                    <Input
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={user?.lastName}
-                      isReadOnly={user?.lastName !== null}
-                    />
-                  </HStack>
-                </FormControl>
-
-                <FormControl id="Gender" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">GENDER</FormLabel>
-                    {/* <Input
-                    maxWidth="50%"
-                    type="text"
-                    focusBorderColor="teal.200"
-                    size="sm"
-                    defaultValue={user?.gender !== null ? user?.gender : ""}
-                    isReadOnly={user?.gender !== null}
-                  /> */}
-                    <Select
-                      onChange={handleChange}
-                      name="gender"
-                      placeholder="Select gender"
-                      maxWidth="50%"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      isReadOnly
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </Select>
-                  </HStack>
-                </FormControl>
-
-                <FormControl id="matricNo" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">MATRIC NO</FormLabel>
-                    <Input
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={user?.matricNo}
-                      isReadOnly
-                    />
-                  </HStack>
-                </FormControl>
-
-                <FormControl id="College" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">COLLEGE</FormLabel>
-                    <Input
-                      onChange={handleChange}
-                      name="college"
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={user?.college !== null ? user?.college : ""}
-                      isReadOnly={user?.college !== null}
-                    />
-                  </HStack>
-                </FormControl>
-
-                <FormControl id="Phone" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">PHONE</FormLabel>
-                    <Input
-                      onChange={handleChange}
-                      name="phone"
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={user?.phone !== null ? user?.phone : ""}
-                      isReadOnly={user?.phone !== null}
-                    />
-                  </HStack>
-                </FormControl>
-
-                <FormControl id="level" mb="3">
-                  <HStack>
-                    <FormLabel w="30%">LEVEL</FormLabel>
-                    {/* <Input
-                    maxWidth="50%"
-                    type="text"
-                    focusBorderColor="teal.200"
-                    size="sm"
-                    defaultValue={user?.level !== null ? user?.level : ""}
-                    isReadOnly={user?.level !== null}
-                  /> */}
-
-                    <Select
-                      name="level"
-                      onChange={handleChange}
-                      placeholder="Select level"
-                      defaultValue={user?.level !== null ? user?.level : ""}
-                      maxWidth="50%"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      isReadOnly
-                    >
-                      <option value="100">100</option>
-                      <option value="200">200</option>
-                      <option value="300">300</option>
-                      <option value="400">400</option>
-                      <option value="500">500</option>
-                    </Select>
-                  </HStack>
-                </FormControl>
-              </Box>
-            </Box>
-
-            <Box w="40%" mr="4" bg="gray.100">
-              <Heading bg="teal.100" size="md" mb="1" p="3">
-                Your Details
-              </Heading>
-              <Box pl="2">
-                <FormControl id="Dept" mb="3">
-                  <FormControl id="Programme" mb="3">
-                    <HStack>
-                      <FormLabel w="34%">PROGRAMME</FormLabel>
-                      <Input
-                        onChange={handleChange}
-                        name="programme"
-                        maxWidth="50%"
-                        type="text"
-                        focusBorderColor="teal.200"
-                        size="sm"
-                        defaultValue={
-                          user?.programme !== null ? user?.programme : ""
-                        }
-                        isReadOnly={user?.programme !== null}
-                      />
-                    </HStack>
-                  </FormControl>
-
-                  <HStack>
-                    <FormLabel w="34%">DEPARTMENT</FormLabel>
-                    <Input
-                      onChange={handleChange}
-                      name="department"
-                      maxWidth="50%"
-                      type="text"
-                      focusBorderColor="teal.200"
-                      size="sm"
-                      defaultValue={
-                        user?.department !== null ? user?.department : ""
-                      }
-                      isReadOnly={user?.department !== null}
-                    />
-                  </HStack>
-                </FormControl>
-              </Box>
-            </Box>
-
-            <Box w="30%" bg="gray.100">
-              <Heading bg="teal.100" size="md" mb="1" p="3">
-                Your Passport
-              </Heading>
-              <Box m="auto" w="150px">
-                {user?.profile_picture !== null ? (
-                  <Image
-                    boxSize="150px"
-                    objectFit="cover"
-                    src={user?.profile_picture}
-                    alt="My passport"
+                    {selects.map((select) => (
+                      <FormControl key={select.id} sx={{ mb: 2 }} size="small">
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <FormLabel htmlFor={select.id} sx={{ width: 100 }}>
+                            {select.name}
+                          </FormLabel>
+                          <Select
+                            name={select.id}
+                            variant="outlined"
+                            onChange={handleSelectChange}
+                            sx={{ minWidth: 210 }}
+                            size="small"
+                            value={
+                              select.id === "gender"
+                                ? userData.gender
+                                : userData.level
+                            }
+                          >
+                            <MenuItem disabled value="">
+                              <em>Placeholder</em>
+                            </MenuItem>
+                            {select.values.map((value, index) => (
+                              <MenuItem key={index} value={value}>
+                                {value}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </Box>
+                      </FormControl>
+                    ))}
+                  </Stack>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                  Your Details
+                </Typography>
+                <Box
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                >
+                  <Stack direction="column">
+                    {inputFields.slice(4).map((input) => (
+                      <FormControl key={input.id} sx={{ mb: 2 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <FormLabel htmlFor={input.id} sx={{ width: 130 }}>
+                            {input.name}
+                          </FormLabel>
+                          <TextField
+                            variant="outlined"
+                            required
+                            id={input.id}
+                            name={input.id}
+                            type="text"
+                            size="small"
+                            onChange={handleChange}
+                            value={
+                              user?.[input.id] === null
+                                ? userData[input.id]
+                                : undefined
+                            }
+                            defaultValue={
+                              user?.[input.id] !== null
+                                ? user?.[input.id]
+                                : undefined
+                            }
+                            disabled={user?.[input.id] !== null}
+                          />
+                        </Box>
+                      </FormControl>
+                    ))}
+                  </Stack>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" sx={{ backgroundColor: "red" }}>
+                  Your Passport
+                </Typography>
+                <Box
+                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                >
+                  <Avatar
+                    sx={{ width: 200, height: 200, mb: 2, objectFit: "cover" }}
+                    src={
+                      user?.profile_picture !== null
+                        ? user?.profile_picture
+                        : imageSrc
+                    }
+                    variant="square"
+                    alt=""
                   />
-                ) : (
-                  <Image
-                    boxSize="150px"
-                    objectFit="cover"
-                    src={imageSrc}
-                    alt="My passport"
-                  />
-                )}
-
-                {doesNotHaveCompleteProfile && (
-                  <Fragment>
-                    <Center mt="20px">
-                      <FileButton change={handlePhotoChange}>
-                        Browse...
-                      </FileButton>
-                    </Center>
-                    <Center mt="20px">
-                      <CustomButton type="submit">Submit</CustomButton>
-                    </Center>
-                  </Fragment>
-                )}
-              </Box>
-            </Box>
-          </Flex>
-        </form>
-      </Card>
-    </Center>
+                  {doesNotHaveCompleteProfile && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <UploadButton change={handlePhotoChange}>
+                        Upload
+                      </UploadButton>
+                      <Button variant="contained" type="submit">
+                        Submit
+                      </Button>
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Box>
+      )}
+    </Fragment>
   );
 };
 
