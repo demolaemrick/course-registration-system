@@ -1,21 +1,24 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
+
 import {
-  Center,
+  Paper,
   FormControl,
   FormLabel,
-  Input,
-  VStack,
+  OutlinedInput,
+  Box,
   Button,
-  Text,
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+  Typography,
+} from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import Card from "../UI/Card/Card";
 import { RegisterFormData } from "../../types/user";
+
 import { register } from "../../store/user/user-actions";
 import { RootState } from "../../store";
+
 import FormErrorMessage from "../UI/FormErrorMessage";
 
 const SignUp = () => {
@@ -34,7 +37,7 @@ const SignUp = () => {
     passwordConfirm: "",
   });
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
 
     setFormData({
@@ -43,111 +46,118 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     dispatch(register(formData, history));
   };
+
   return (
-    <Center>
-      <Card width="30%">
-        <VStack spacing={4}>
-          <Text fontSize="4xl">Sign Up</Text>
+    <Box
+      component="form"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "600px",
+      }}
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
+      <Paper
+        elevation={4}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          p: 4,
+          minWidth: "30%",
+        }}
+      >
+        <Typography variant="h3" mb={2}>
+          Sign Up
+        </Typography>
+        <FormControl id="firstName" fullWidth size="small" required>
+          <FormLabel>First Name</FormLabel>
+          <OutlinedInput
+            type="text"
+            placeholder="Enter your first name"
+            name="firstName"
+            onChange={handleChange}
+            error={!!error?.firstName}
+          />
+          <FormErrorMessage mt={1}>{error?.firstName}</FormErrorMessage>
+        </FormControl>
+        <FormControl id="secondName" fullWidth size="small" required>
+          <FormLabel>Last Name</FormLabel>
+          <OutlinedInput
+            name="lastName"
+            onChange={handleChange}
+            placeholder="Enter your last name"
+            error={!!error?.lastName}
+          />
+          <FormErrorMessage>{error?.lastName}</FormErrorMessage>
+        </FormControl>
+        <FormControl id="email" fullWidth size="small" required>
+          <FormLabel>Email Address</FormLabel>
+          <OutlinedInput
+            type="email"
+            name="email"
+            placeholder="Enter your email address"
+            onChange={handleChange}
+            error={!!error?.email}
+          />
 
-          <FormControl id="firstName" isRequired>
-            <FormLabel>First Name</FormLabel>
-            <Input
-              type="text"
-              focusBorderColor="teal.200"
-              placeholder="Enter your first name"
-              size="sm"
-              name="firstName"
-              onChange={handleChange}
-              isInvalid={!!error?.firstName}
-            />
-            <FormErrorMessage>{error?.firstName}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="secondName" isRequired>
-            <FormLabel>Last Name</FormLabel>
-            <Input
-              type="text"
-              focusBorderColor="teal.200"
-              placeholder="Enter your last name"
-              size="sm"
-              name="lastName"
-              onChange={handleChange}
-              isInvalid={!!error?.lastName}
-            />
-            <FormErrorMessage>{error?.lastName}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="email" isRequired>
-            <FormLabel>Email Address</FormLabel>
-            <Input
-              type="email"
-              focusBorderColor="teal.200"
-              placeholder="Enter your email address"
-              size="sm"
-              name="email"
-              onChange={handleChange}
-              isInvalid={!!error?.email}
-            />
+          <FormErrorMessage mt={1}>{error?.email}</FormErrorMessage>
+        </FormControl>
+        <FormControl id="matricNo" fullWidth size="small" required>
+          <FormLabel>Matric Number</FormLabel>
+          <OutlinedInput
+            type="text"
+            placeholder="Enter your matric number"
+            name="matricNo"
+            onChange={handleChange}
+            error={!!error?.matricNo}
+          />
+          <FormErrorMessage mt={1}>{error?.matricNo}</FormErrorMessage>
+        </FormControl>
+        <FormControl id="password" fullWidth size="small" required>
+          <FormLabel>Password</FormLabel>
+          <OutlinedInput
+            type="password"
+            placeholder="Enter your password"
+            name="password"
+            onChange={handleChange}
+            error={!!error?.password}
+          />
+          <FormErrorMessage mt={1}>{error?.password}</FormErrorMessage>
+        </FormControl>
+        <FormControl id="passwordConfirm" fullWidth size="small" required>
+          <FormLabel>Confirm Password</FormLabel>
+          <OutlinedInput
+            type="password"
+            placeholder="Confirm your password"
+            name="passwordConfirm"
+            onChange={handleChange}
+            error={!!error?.passwordConfirm}
+          />
 
-            <FormErrorMessage>{error?.email}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="matricNo" isRequired>
-            <FormLabel>Matric Number</FormLabel>
-            <Input
-              type="text"
-              focusBorderColor="teal.200"
-              placeholder="Enter your matric number"
-              size="sm"
-              name="matricNo"
-              onChange={handleChange}
-              isInvalid={!!error?.matricNo}
-            />
-            <FormErrorMessage>{error?.matricNo}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="password" isRequired>
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor="teal.200"
-              placeholder="Enter your password"
-              size="sm"
-              name="password"
-              onChange={handleChange}
-              isInvalid={!!error?.password}
-            />
+          <FormErrorMessage mt={1}>{error?.passwordConfirm}</FormErrorMessage>
+        </FormControl>
 
-            <FormErrorMessage>{error?.password}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="passwordConfirm" isRequired>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor="teal.200"
-              placeholder="Confirm your password"
-              size="sm"
-              name="passwordConfirm"
-              onChange={handleChange}
-              isInvalid={!!error?.passwordConfirm}
-            />
-
-            <FormErrorMessage>{error?.passwordConfirm}</FormErrorMessage>
-          </FormControl>
-
-          <Button
-            mt={4}
-            colorScheme="teal"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Sign Up
-          </Button>
-          <Link to="/login">
-            <p style={{ color: "blue" }}>Already have an account?</p>
-          </Link>
-        </VStack>
-      </Card>
-    </Center>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ my: 3 }}
+          type="submit"
+        >
+          Sign Up
+        </Button>
+        <Link to="/login">
+          <Typography variant="subtitle2">Already have an account?</Typography>
+        </Link>
+      </Paper>
+    </Box>
   );
 };
 
