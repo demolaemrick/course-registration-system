@@ -71,19 +71,20 @@ const Login = () => {
         <Typography variant="subtitle1" color="error" mb={2}>
           {authError}
         </Typography>
-        <FormControl sx={{ width: "95%", mb: 2 }} size="small">
+        <FormControl sx={{ mb: 2 }} fullWidth size="small">
           <FormLabel htmlFor="matricNo">Student Id</FormLabel>
           <OutlinedInput
             id="matricNo"
             placeholder="Please enter matric number"
             type="text"
             inputRef={matricNoRef}
-            error={!!validationError?.matricNo}
           />
-          <FormErrorMessage>{validationError?.matricNo}</FormErrorMessage>
+          <FormErrorMessage mt={2}>
+            {validationError?.matricNo}
+          </FormErrorMessage>
         </FormControl>
 
-        <FormControl sx={{ width: "95%", mb: 2 }} size="small">
+        <FormControl sx={{ mb: 2 }} fullWidth size="small">
           <FormLabel htmlFor="password">Password</FormLabel>
           <OutlinedInput
             id="password"
@@ -92,7 +93,9 @@ const Login = () => {
             inputRef={passwordRef}
             error={!!validationError?.password}
           />
-          <FormErrorMessage>{validationError?.password}</FormErrorMessage>
+          <FormErrorMessage mt={2}>
+            {validationError?.password}
+          </FormErrorMessage>
         </FormControl>
         <Button
           variant="contained"
