@@ -5,10 +5,8 @@ import { useDispatch } from "react-redux";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
-// import SignUp from "./components/pages/SignUp";
-import SignUp from "./components/pages/NewSignup";
-// import Profile from "./components/pages/Profile";
-import Profile from "./components/pages/NewProfile";
+import SignUp from "./components/pages/SignUp";
+import Profile from "./components/pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 
 import { checkUser } from "./store/user/user-actions";
