@@ -1,16 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Courses } from "../../types/course";
+import { CourseState } from "../../types/course";
 
-const initialState: Courses = {
+const initialState: CourseState = {
   courses: [],
+  isLoading: false,
 };
 
 export const courseSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    replaceCourses: (state, action: PayloadAction<Courses>) => {
+    fetchCourseStart: (state) => {
+      state.isLoading = true;
+    },
+    fetchCourses: (state, action: PayloadAction<CourseState>) => {
       state.courses = action.payload.courses;
+      state.isLoading = false;
     },
   },
 });
