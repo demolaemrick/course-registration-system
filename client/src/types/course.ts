@@ -7,6 +7,7 @@ export interface Course {
   updatedAt: string;
 }
 
-export interface Courses {
+export interface CourseState {
   courses: Course[];
+  isLoading?: boolean;
 }
