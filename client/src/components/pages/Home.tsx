@@ -1,5 +1,5 @@
 import { useEffect, useState, Fragment } from "react";
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, CircularProgress, Box } from "@mui/material";
 
 import { fetchCourses } from "../../store/course/course-actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,9 @@ import Table from "../UI/Table";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { courses } = useSelector((state: RootState) => state.courseReducer);
+  const { courses, isLoading } = useSelector(
+    (state: RootState) => state.courseReducer
+  );
   const [totalCourseUnitSelected, setTotalCourseUnitSelected] =
     useState<number>(0);
 
@@ -25,31 +27,50 @@ const Home = () => {
       <Typography variant="h4" mt={5} align="center">
         STUDENT FIRST SEMESTER COURSE REGISTRATION
       </Typography>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ minHeight: "80vh" }}
-      >
-        <Grid item>
-          {courses.length > 0 && (
-            <Table courses={courses} handleCount={handleCount} />
-          )}
-        </Grid>
-        <Grid item xs={8} mt={2}>
-          <Grid container justifyContent="space-between" sx={{ minWidth: 700 }}>
-            <Grid item>
-              Course unit: <strong>{totalCourseUnitSelected}</strong>
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary">
-                Register
-              </Button>
+      {isLoading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "50vh",
+          }}
+        >
+          <CircularProgress size={80} color="primary" />
+        </Box>
+      )}
+
+      {!isLoading && (
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ minHeight: "80vh" }}
+        >
+          <Grid item>
+            {courses.length > 0 && (
+              <Table courses={courses} handleCount={handleCount} />
+            )}
+          </Grid>
+          <Grid item xs={8} mt={2}>
+            <Grid
+              container
+              justifyContent="space-between"
+              sx={{ minWidth: 700 }}
+            >
+              <Grid item>
+                Course unit: <strong>{totalCourseUnitSelected}</strong>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary">
+                  Register
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </Fragment>
   );
 };
