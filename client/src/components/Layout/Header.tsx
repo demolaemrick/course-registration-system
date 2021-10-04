@@ -19,10 +19,13 @@ export default function ButtonAppBar() {
           </Typography>
           {isLoggedIn ? (
             <Fragment>
-              <Button color="inherit">
-                <NavLink to="/profile">profile</NavLink>
-              </Button>{" "}
               <Button color="inherit" onClick={() => dispatch(logout(history))}>
+                <Button color="inherit">
+                  <NavLink to="/profile">profile</NavLink>
+                </Button>
+                <Button color="inherit">
+                  <NavLink to="/enrolled">Enrolled courses</NavLink>
+                </Button>
                 <NavLink to="/logout">logout</NavLink>
               </Button>
             </Fragment>
