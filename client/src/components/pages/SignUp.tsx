@@ -20,6 +20,7 @@ import { register } from "../../store/user/user-actions";
 import { RootState } from "../../store";
 
 import FormErrorMessage from "../UI/FormErrorMessage";
+import Logo from "../Logo";
 
 const SignUp = () => {
   const error = useSelector(
@@ -58,7 +59,8 @@ const SignUp = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "600px",
+        maxHeight: "500px",
+        marginTop: 10,
       }}
       noValidate
       autoComplete="off"
@@ -74,9 +76,9 @@ const SignUp = () => {
           minWidth: "30%",
         }}
       >
-        <Typography variant="h3" mb={2}>
-          Sign Up
-        </Typography>
+        <Box sx={{ height: 80, width: 80, marginBottom: 2 }}>
+          <Logo />
+        </Box>
         <FormControl id="firstName" fullWidth size="small" required>
           <FormLabel>First Name</FormLabel>
           <OutlinedInput
@@ -146,6 +148,7 @@ const SignUp = () => {
         </FormControl>
 
         <Button
+          fullWidth
           variant="contained"
           color="primary"
           sx={{ my: 3 }}
