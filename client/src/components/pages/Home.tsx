@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <Fragment>
       <Typography variant="h4" mt={5} align="center">
-        STUDENT FIRST SEMESTER COURSE REGISTRATION
+        STUDENT COURSE REGISTRATION
       </Typography>
       {isLoading && (
         <Box
