@@ -126,12 +126,16 @@ const Profile = () => {
           encType="multipart/form-data"
         >
           <Paper
-            elevation={4}
-            sx={{ padding: 2, minWidth: 800, backgroundColor: "#8de4af" }}
+            elevation={6}
+            sx={{ padding: 2, minWidth: 800, backgroundColor: "#c9d6d1" }}
           >
             <Grid container spacing={4}>
               <Grid item>
-                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                <Typography
+                  variant="h6"
+                  color="white"
+                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                >
                   Your details
                 </Typography>
                 <Box
@@ -214,7 +218,11 @@ const Profile = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Typography variant="h6" sx={{ backgroundColor: "#004c23" }}>
+                <Typography
+                  variant="h6"
+                  color="white"
+                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                >
                   Your Details
                 </Typography>
                 <Box
@@ -261,7 +269,11 @@ const Profile = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Typography variant="h6" sx={{ backgroundColor: "red" }}>
+                <Typography
+                  variant="h6"
+                  color="white"
+                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                >
                   Your Passport
                 </Typography>
                 <Box
