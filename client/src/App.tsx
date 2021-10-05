@@ -8,6 +8,7 @@ import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
 import Profile from "./components/pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import Enrolled from "./components/pages/Enrolled";
 
 import { checkUser } from "./store/user/user-actions";
 
@@ -20,11 +21,12 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/register" component={SignUp} />
-        <Route path="/login" component={Login} />
         <Layout>
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/courses/enroll-history" component={Enrolled} />
+          <Route path="/register" component={SignUp} />
+          <Route path="/login" component={Login} />
         </Layout>
       </Switch>
     </Router>
