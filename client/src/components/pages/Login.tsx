@@ -18,6 +18,7 @@ import { login } from "../../store/user/user-actions";
 import { RootState } from "../../store";
 
 import FormErrorMessage from "../UI/FormErrorMessage";
+import Logo from "../Logo";
 
 const Login = () => {
   const { loginValidationError: validationError, authError } = useSelector(
@@ -65,17 +66,18 @@ const Login = () => {
           minWidth: "30%",
         }}
       >
-        <Typography variant="h3" mb={2}>
-          Log In
-        </Typography>
+        <Box sx={{ height: 80, width: 80 }}>
+          <Logo />
+        </Box>
+
         <Typography variant="subtitle1" color="error" mb={2}>
           {authError}
         </Typography>
         <FormControl sx={{ mb: 2 }} fullWidth size="small">
-          <FormLabel htmlFor="matricNo">Student Id</FormLabel>
+          <FormLabel htmlFor="matricNo">Username</FormLabel>
           <OutlinedInput
             id="matricNo"
-            placeholder="Please enter matric number"
+            placeholder="Enter username"
             type="text"
             inputRef={matricNoRef}
           />
@@ -88,7 +90,7 @@ const Login = () => {
           <FormLabel htmlFor="password">Password</FormLabel>
           <OutlinedInput
             id="password"
-            placeholder="Please enter password"
+            placeholder="Enter password"
             type="password"
             inputRef={passwordRef}
             error={!!validationError?.password}
@@ -99,6 +101,7 @@ const Login = () => {
         </FormControl>
         <Button
           variant="contained"
+          fullWidth
           sx={{ my: 3 }}
           color="primary"
           onClick={handleSubmit}
