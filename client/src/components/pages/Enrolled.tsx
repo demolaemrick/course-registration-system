@@ -1,5 +1,4 @@
 import {
-  Box,
   Typography,
   Divider,
   Container,
