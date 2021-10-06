@@ -44,7 +44,7 @@ const Enrolled = () => {
       <Divider sx={{ backgroundColor: "#389583", height: 1.2 }} />
       <Paper
         elevation={10}
-        sx={{ padding: 4, backgroundColor: "#c9d6d1", marginTop: 5 }}
+        sx={{ padding: 3, backgroundColor: "#c9d6d1", marginTop: 5 }}
       >
         <Toolbar
           sx={{
