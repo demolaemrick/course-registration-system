@@ -1,11 +1,4 @@
 import { useState, FormEvent, ChangeEvent, Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-import { RootState } from "../../store";
-import { updateUser } from "../../store/user/user-actions";
-
-import { UserUpdateOptions } from "../../types/user";
 
 import {
   Grid,
@@ -16,45 +9,33 @@ import {
   FormLabel,
   Stack,
   MenuItem,
-  Avatar,
   Button,
   TextField,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import UploadButton from "../UI/Buttons/UploadButton";
-
-import AvatarImage from "../../assets/Avatar.jpg";
-
+const data = [
+  { id: "name", name: "Your-Name", value: "Akindotuni Ademola" },
+  { id: "email", name: "Email", value: "ademolaakindotuni@gmail.com" },
+  { id: "phone", name: "Phone", value: "08134905896" },
+  { id: "gender", name: "Gender", value: "Male" },
+  { id: "staffId", name: "StaffId", value: "AUO121345" },
+  { id: "position", name: "Position", value: "Admin" },
+];
 const inputFields = [
   { id: "firstName", name: "FIRSTNAME" },
   { id: "lastName", name: "LASTNAME" },
-  { id: "matricNo", name: "STUDENT ID" },
-  { id: "phone", name: "PHONE" },
-  { id: "programme", name: "PRGORGRAMME" },
-  { id: "department", name: "DEPARTMENT" },
-  { id: "college", name: "COLLEGE" },
+  { id: "password", name: "PASSWORD" },
+  { id: "confirmPassword", name: "PASSWORD2" },
 ];
 
 const AdminDashboard = () => {
-  const { user, doesNotHaveCompleteProfile, isLoading } = useSelector(
-    (state: RootState) => state.userReducer
-  );
-
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const [userData, setUserData] = useState<UserUpdateOptions>({
-    gender: "",
-    college: "",
-    phone: "",
-    level: "",
-    department: "",
-    programme: "",
-    profile_picture: "",
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    position: "",
   });
-
-  const [imageSrc, setImageSrc] = useState(AvatarImage);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
@@ -74,58 +55,84 @@ const AdminDashboard = () => {
     });
   };
 
-  const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
-
-    if (!fileList) return;
-
-    setUserData({ ...userData, profile_picture: fileList[0] });
-    setImageSrc(URL.createObjectURL(fileList[0]));
-  };
-
-  const handleProfileUpdate = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("profile_picture", userData.profile_picture);
-    formData.append("gender", userData.gender);
-    formData.append("phone", userData.phone);
-    formData.append("level", userData.level);
-    formData.append("college", userData.college);
-    formData.append("department", userData.department);
-    formData.append("programme", userData.programme);
-
-    dispatch(updateUser(formData, history));
+    console.log(userData);
+    //   dispatch(updateUser(formData, history));
   };
   return (
     <Fragment>
-      {!isLoading && (
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "600px",
-          }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "600px",
+        }}
+      >
+        <Paper
+          elevation={6}
+          sx={{ padding: 2, minWidth: 800, backgroundColor: "#c9d6d1" }}
         >
-          <Paper
-            elevation={6}
-            sx={{ padding: 2, minWidth: 800, backgroundColor: "#c9d6d1" }}
-          >
-            <Grid container spacing={4}>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  color="white"
-                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
-                >
-                  Your details
-                </Typography>
-                <Box
-                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
-                >
-                  <Stack direction="column">
-                    {inputFields.slice(0, 3).map((input) => (
+          <Grid container columns={16} spacing={4}>
+            <Grid item xs={8}>
+              <Typography
+                variant="h6"
+                color="white"
+                sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+              >
+                Your Details
+              </Typography>
+
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  padding: 2,
+                  minHeight: 315,
+                  height: 348,
+                }}
+              >
+                <Stack direction="column">
+                  {data.map(({ id, name, value }) => (
+                    <Box
+                      key={id}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginBottom: 2,
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ width: 100, marginRight: 1 }}
+                      >
+                        {name}:
+                      </Typography>
+                      <Typography variant="subtitle1">{value}</Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Box>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="h6"
+                color="white"
+                sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+              >
+                Register New Member
+              </Typography>
+              <Box
+                component="form"
+                sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+              >
+                <Stack direction="column">
+                  {inputFields.map((input) => (
+                    <FormControl key={input.id} sx={{ mb: 2 }}>
                       <Box
                         sx={{
                           display: "flex",
@@ -134,64 +141,54 @@ const AdminDashboard = () => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Typography sx={{ width: 100 }}>
+                        <FormLabel htmlFor={input.id} sx={{ width: 130 }}>
                           {input.name}:
-                        </Typography>
-                        <Typography>Hello</Typography>
+                        </FormLabel>
+                        <TextField
+                          variant="outlined"
+                          required
+                          id={input.id}
+                          name={input.id}
+                          type="text"
+                          size="small"
+                          onChange={handleChange}
+                        />
                       </Box>
-                    ))}
-                  </Stack>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  color="white"
-                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
-                >
-                  Your Details
-                </Typography>
-                <Box
-                  component="form"
-                  sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
-                  noValidate
-                  autoComplete="off"
-                  onSubmit={handleProfileUpdate}
-                  encType="multipart/form-data"
-                >
-                  <Stack direction="column">
-                    {inputFields.slice(4).map((input) => (
-                      <FormControl key={input.id} sx={{ mb: 2 }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <FormLabel htmlFor={input.id} sx={{ width: 130 }}>
-                            {input.name}
-                          </FormLabel>
-                          <TextField
-                            variant="outlined"
-                            required
-                            id={input.id}
-                            name={input.id}
-                            type="text"
-                            size="small"
-                            onChange={handleChange}
-                          />
-                        </Box>
-                      </FormControl>
-                    ))}
-                  </Stack>
-                </Box>
-              </Grid>
+                    </FormControl>
+                  ))}
+                  <FormControl sx={{ mb: 2 }} size="small">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <FormLabel htmlFor="position" sx={{ width: 100 }}>
+                        POSITION
+                      </FormLabel>
+                      <Select
+                        name="position"
+                        variant="outlined"
+                        onChange={handleSelectChange}
+                        sx={{ minWidth: 210 }}
+                        size="small"
+                      >
+                        <MenuItem disabled value="">
+                          <em>Placeholder</em>
+                        </MenuItem>
+                        <MenuItem value="hod">HOD</MenuItem>
+                      </Select>
+                    </Box>
+                  </FormControl>
+                  <Button>Submit</Button>
+                </Stack>
+              </Box>
             </Grid>
-          </Paper>
-        </Box>
-      )}
+          </Grid>
+        </Paper>
+      </Box>
     </Fragment>
   );
 };
