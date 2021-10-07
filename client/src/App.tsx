@@ -12,6 +12,8 @@ import Enrolled from "./components/pages/Enrolled";
 
 import { checkUser } from "./store/user/user-actions";
 
+import AdminDashboard from "./components/pages/AdminDdashboard";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -27,6 +29,7 @@ function App() {
           <PrivateRoute path="/courses/enroll-history" component={Enrolled} />
           <Route path="/register" component={SignUp} />
           <Route path="/login" component={Login} />
+          <Route path="/admin" component={AdminDashboard} />
         </Layout>
       </Switch>
     </Router>
