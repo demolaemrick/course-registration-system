@@ -61,24 +61,23 @@ const CustomizedTables = ({ courses, handleCount }: Props) => {
     setPage(0);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const newSelect = courses.find((c) => c.uuid === name) || ({} as Course);
+  const handleClick = (event: React.MouseEvent<unknown>, uuid: string) => {
+    const newSelect = courses.find((c) => c.uuid === uuid) || ({} as Course);
 
     const selectedIndex = selected.indexOf(newSelect);
 
-    let newSelecteds;
+    let newSelected;
     if (selectedIndex === -1) {
-      newSelecteds = [...selected, newSelect];
+      newSelected = [...selected, newSelect];
     } else {
-      newSelecteds = selected.filter((s) => s.uuid !== name);
+      newSelected = selected.filter((s) => s.uuid !== uuid);
     }
 
-    const courseUnits = newSelecteds.map((c) => c.course_unit);
-
+    const courseUnits = newSelected.map((c) => c.course_unit);
     const newCourseUnitCounts = courseUnits.reduce((acc, cur) => acc + cur, 0);
 
     handleCount(newCourseUnitCounts);
-    setSelected(newSelecteds);
+    setSelected(newSelected);
   };
 
   return (
