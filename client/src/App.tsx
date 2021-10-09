@@ -14,6 +14,7 @@ import { checkUser } from "./store/user/user-actions";
 
 import AdminDashboard from "./components/pages/AdminDashboard";
 import ManageAccount from "./components/pages/ManageAccount";
+import CourseSetup from "./components/pages/CourseSetup";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route exact path="/admin" component={AdminDashboard} />
           <Route path="/admin/manage-students" component={ManageAccount} />
+          <Route path="/hod/courses/setup" component={CourseSetup} />
         </Layout>
       </Switch>
     </Router>
