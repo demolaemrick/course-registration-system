@@ -41,7 +41,7 @@ const Enrolled = () => {
       <Typography color="#162c24" my={2} variant="h6">
         Enroll History
       </Typography>
-      <Divider sx={{ backgroundColor: "#389583", height: 1.2 }} />
+      <Divider sx={{ backgroundColor: "#389583", height: 1.5 }} />
       <Paper
         elevation={10}
         sx={{ padding: 3, backgroundColor: "#c9d6d1", marginTop: 5 }}
