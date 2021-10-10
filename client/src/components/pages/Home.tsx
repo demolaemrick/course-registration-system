@@ -1,5 +1,13 @@
-import { useEffect, useState, Fragment } from "react";
-import { Grid, Button, Typography, CircularProgress, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Grid,
+  Button,
+  Typography,
+  CircularProgress,
+  Box,
+  Divider,
+  Container,
+} from "@mui/material";
 
 import { fetchCourses } from "../../store/course/course-actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,10 +31,12 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <Fragment>
-      <Typography variant="h4" mt={5} align="center">
-        STUDENT COURSE REGISTRATION
+    <Container fixed>
+      <Typography color="#162c24" my={2} variant="h6">
+        Student Course Registration
       </Typography>
+      <Divider sx={{ backgroundColor: "#389583", height: 1.5 }} />
+
       {isLoading && (
         <Box
           sx={{
@@ -41,26 +51,22 @@ const Home = () => {
       )}
 
       {!isLoading && (
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ minHeight: "80vh" }}
-        >
-          <Grid item>
+        <Grid container sx={{ minHeight: "70vh", marginTop: 5 }}>
+          <Grid item xs={12}>
             {courses.length > 0 && (
               <Table courses={courses} handleCount={handleCount} />
             )}
           </Grid>
-          <Grid item xs={8} mt={2}>
+          <Grid item xs={12}>
             <Grid
               container
               justifyContent="space-between"
               sx={{ minWidth: 700 }}
             >
               <Grid item>
-                Course unit: <strong>{totalCourseUnitSelected}</strong>
+                <Typography variant="subtitle1">
+                  Course unit: <strong>{totalCourseUnitSelected}</strong>
+                </Typography>
               </Grid>
               <Grid item>
                 <Button variant="contained" color="primary">
@@ -71,7 +77,7 @@ const Home = () => {
           </Grid>
         </Grid>
       )}
-    </Fragment>
+    </Container>
   );
 };
 
