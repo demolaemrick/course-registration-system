@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import { ChakraProvider } from "@chakra-ui/react";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { store } from "./store";
@@ -29,13 +27,11 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </Provider>
-    </ChakraProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
