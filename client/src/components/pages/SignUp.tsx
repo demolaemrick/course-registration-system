@@ -156,9 +156,15 @@ const SignUp = () => {
         >
           Sign Up
         </Button>
-        <Link to="/login">
-          <Typography variant="subtitle2">Already have an account?</Typography>
-        </Link>
+        <Typography
+          color="inherit"
+          sx={{ textDecoration: "none" }}
+          component={Link}
+          to="/login"
+          variant="subtitle2"
+        >
+          Already have an account?
+        </Typography>
       </Paper>
     </Box>
   );
