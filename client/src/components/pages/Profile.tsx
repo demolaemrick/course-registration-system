@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, Fragment } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -19,8 +19,11 @@ import {
   Avatar,
   Button,
   TextField,
+  Divider,
+  Container,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 import UploadButton from "../UI/Buttons/UploadButton";
 
@@ -110,14 +113,16 @@ const Profile = () => {
     dispatch(updateUser(formData, history));
   };
   return (
-    <Fragment>
+    <Container fixed>
+      <Typography color="#162c24" my={2} variant="h6">
+        Student Profile
+      </Typography>
+      <Divider sx={{ backgroundColor: "#389583", height: 1.5 }} />
       {!isLoading && (
         <Box
           component="form"
+          mt={5}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             minHeight: "600px",
           }}
           noValidate
@@ -130,13 +135,13 @@ const Profile = () => {
             sx={{ padding: 2, minWidth: 800, backgroundColor: "#c9d6d1" }}
           >
             <Grid container spacing={4}>
-              <Grid item>
+              <Grid item xs={4}>
                 <Typography
                   variant="h6"
                   color="white"
-                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                  sx={{ backgroundColor: "#389583", paddingLeft: 1 }}
                 >
-                  Your details
+                  Your Details
                 </Typography>
                 <Box
                   sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
@@ -217,11 +222,11 @@ const Profile = () => {
                   </Stack>
                 </Box>
               </Grid>
-              <Grid item>
+              <Grid item xs={4}>
                 <Typography
                   variant="h6"
                   color="white"
-                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                  sx={{ backgroundColor: "#389583", paddingLeft: 1 }}
                 >
                   Your Details
                 </Typography>
@@ -268,11 +273,11 @@ const Profile = () => {
                   </Stack>
                 </Box>
               </Grid>
-              <Grid item>
+              <Grid item xs={4}>
                 <Typography
                   variant="h6"
                   color="white"
-                  sx={{ backgroundColor: "#801348", paddingLeft: 1 }}
+                  sx={{ backgroundColor: "#389583", paddingLeft: 1 }}
                 >
                   Your Passport
                 </Typography>
@@ -280,7 +285,13 @@ const Profile = () => {
                   sx={{ backgroundColor: "white", padding: 2, minHeight: 315 }}
                 >
                   <Avatar
-                    sx={{ width: 200, height: 200, mb: 2, objectFit: "cover" }}
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      mb: 2,
+                      objectFit: "cover",
+                      mx: "auto",
+                    }}
                     src={
                       user?.profile_picture !== null
                         ? user?.profile_picture
@@ -300,7 +311,12 @@ const Profile = () => {
                       <UploadButton change={handlePhotoChange}>
                         Upload
                       </UploadButton>
-                      <Button variant="contained" type="submit">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        endIcon={<DoneAllIcon />}
+                        type="submit"
+                      >
                         Submit
                       </Button>
                     </Box>
@@ -311,7 +327,7 @@ const Profile = () => {
           </Paper>
         </Box>
       )}
-    </Fragment>
+    </Container>
   );
 };
 
