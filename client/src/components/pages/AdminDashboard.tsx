@@ -11,6 +11,8 @@ import {
   MenuItem,
   Button,
   TextField,
+  Divider,
+  Container,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
@@ -62,23 +64,25 @@ const AdminDashboard = () => {
   };
   return (
     <Fragment>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          minHeight: "600px",
-          width: "800px",
-          margin: "0 auto",
-        }}
+      <Container
+        fixed
+        // sx={{
+        //   display: "flex",
+        //   flexDirection: "column",
+        //   justifyContent: "center",
+        //   minHeight: "600px",
+        //   width: "800px",
+        //   margin: "0 auto",
+        // }}
       >
-        <Box sx={{ marginBottom: 5 }}>
+        <Box sx={{ marginBottom: 5, marginTop: 2 }}>
           <Typography variant="h4" mb={1}>
             WELCOME: AKINDOTUNI ADEMOLA
           </Typography>
           <Typography variant="h6">
             Tuesday, 7 October 2021|9:27:41PM
           </Typography>
+          <Divider sx={{ backgroundColor: "#389583", height: 2 }} />
         </Box>
 
         <Paper
@@ -158,6 +162,7 @@ const AdminDashboard = () => {
                         <TextField
                           variant="outlined"
                           required
+                          fullWidth
                           id={input.id}
                           name={input.id}
                           type="text"
@@ -177,13 +182,13 @@ const AdminDashboard = () => {
                       }}
                     >
                       <FormLabel htmlFor="position" sx={{ width: 100 }}>
-                        POSITION
+                        POSITION:
                       </FormLabel>
                       <Select
                         name="position"
                         variant="outlined"
                         onChange={handleSelectChange}
-                        sx={{ minWidth: 210 }}
+                        sx={{ minWidth: 210, width: "80%" }}
                         size="small"
                       >
                         <MenuItem disabled value="">
@@ -199,7 +204,7 @@ const AdminDashboard = () => {
             </Grid>
           </Grid>
         </Paper>
-      </Box>
+      </Container>
     </Fragment>
   );
 };
