@@ -108,9 +108,15 @@ const Login = () => {
         >
           Sign In
         </Button>
-        <Link to="/register">
-          <Typography variant="subtitle2">Create new account?</Typography>
-        </Link>
+        <Typography
+          color="inherit"
+          sx={{ textDecoration: "none" }}
+          component={Link}
+          to="/register"
+          variant="subtitle2"
+        >
+          Create new account?
+        </Typography>
       </Paper>
     </Box>
   );
