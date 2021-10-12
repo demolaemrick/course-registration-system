@@ -99,9 +99,6 @@ const CourseSetup = () => {
                     )
                   }
                 >
-                  {/* <MenuItem value="Placeholder">
-                    <em>Placeholder</em>
-                  </MenuItem> */}
                   {field.values.map((value, index) => (
                     <MenuItem key={index} value={value}>
                       {value}
