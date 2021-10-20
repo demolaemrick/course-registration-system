@@ -14,7 +14,12 @@ const UploadButton = (props: any) => {
         multiple
         type="file"
       />
-      <Button variant="text" color="secondary" component="span">
+      <Button
+        disabled={props.disabled}
+        variant="text"
+        color="secondary"
+        component="span"
+      >
         {props.children}
       </Button>
     </label>
