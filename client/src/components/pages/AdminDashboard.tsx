@@ -25,10 +25,10 @@ const data = [
   { id: "position", name: "Position", value: "Admin" },
 ];
 const inputFields = [
-  { id: "firstName", name: "FIRSTNAME" },
-  { id: "lastName", name: "LASTNAME" },
-  { id: "password", name: "PASSWORD" },
-  { id: "confirmPassword", name: "PASSWORD2" },
+  { id: "firstName", name: "FIRSTNAME", type: "text" },
+  { id: "lastName", name: "LASTNAME", type: "text" },
+  { id: "password", name: "PASSWORD", type: "password" },
+  { id: "confirmPassword", name: "PASSWORD2", type: "password" },
 ];
 
 const AdminDashboard = () => {
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
                           fullWidth
                           id={input.id}
                           name={input.id}
-                          type="text"
+                          type={input.type}
                           size="small"
                           onChange={handleChange}
                         />
